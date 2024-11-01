@@ -37,6 +37,11 @@ function Navbar({ className }) {
       >
         <IoMenu className="text-4xl"/>
       </button>
+      <div className="z-50 flex relative left-8 bg-slate-200 h-0">
+        <a href="#" className="text-white">
+          <img src={img} alt="" className="h-8 w-13 xl:hidden mt-7 bg-transparent rounded-md" style={{ backgroundColor: 'transparent' }}/>
+        </a>
+      </div>
 
       {/* Drawer for Mobile */}
       <div
@@ -46,6 +51,7 @@ function Navbar({ className }) {
       >
         
         <div className="w-full bg-black h-full p-12 text-2xl flex">
+        
           <button
             className="text-white text-xl absolute top-4 right-4"
             onClick={() => setIsDrawerOpen(false)}
