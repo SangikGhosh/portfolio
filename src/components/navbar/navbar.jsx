@@ -42,10 +42,10 @@ function Navbar({ className }) {
       <div
         className={`fixed inset-0 bg-black bg-opacity-75 transition-transform transform ${
           isDrawerOpen ? "translate-x-0" : "translate-x-full"
-        } lg:hidden z-50`}
+        } xl:hidden z-50`}
       >
         
-        <div className="w-full bg-[#0a0a0a] h-full p-12 text-2xl flex">
+        <div className="w-full bg-black h-full p-12 text-2xl flex">
           <button
             className="text-white text-xl absolute top-4 right-4"
             onClick={() => setIsDrawerOpen(false)}
@@ -95,7 +95,7 @@ function Navbar({ className }) {
               Journey
             </Link>
             
-            < a className="bg-[#fff] text-[#111] px-3 py-1 rounded-full flex items-center transition-shadow duration-300 hover:shadow-md font-semibold hover:shadow-white">
+            < a className="bg-[#fff] text-[#000] px-3 py-1 rounded-full flex items-center transition-shadow duration-300 hover:shadow-md font-semibold hover:shadow-white">
             <FontAwesomeIcon 
             icon={faWhatsapp} 
             style={{ color: "#0fd79b" }} 
@@ -122,7 +122,7 @@ function Navbar({ className }) {
       duration={1000}
       className="text-white hover:text-slate-300 transition-colors duration-300 font-semibold pt-0.5 cursor-pointer"
     >
-      <IoHome className=" mr-2 mb-1 hidden 2xl:inline-block" />
+      <IoHome className="inline-block mr-2 mb-1 hidden 2xl:inline-block" />
       Home
     </Link>
     <Link
