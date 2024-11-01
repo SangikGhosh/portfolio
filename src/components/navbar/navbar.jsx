@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu } from "./NavUi"; 
+import { Menu } from "./navUI"; 
 import { cn } from "../../lib/utils";
 import { IoHome, IoCloseSharp, IoMenu, IoSettings } from "react-icons/io5";
 import { TbReportAnalytics } from "react-icons/tb";
