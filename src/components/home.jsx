@@ -4,7 +4,7 @@ import img from "../assets/removebg.png";
 const Homepage = () => {
   return (
     <>
-      <section className="sticky top-0 flex flex-col-reverse lg:flex-row items-center min-h-screen bg-black py-[1rem] lg:py-0 text-white px-6 md:px-12 lg:px-0 xl:px-14">
+      <section className="mt-[-10rem] lg:mt-0 sticky top-0 flex flex-col-reverse lg:flex-row items-center min-h-screen bg-black py-[1rem] lg:py-0 text-white px-6 md:px-12 lg:px-0 xl:px-14">
         <div className="flex flex-col items-start w-full lg:w-1/2 lg:pl-[9rem]">
           <h3 className="text-yellow-500 text-xs md:text-sm lg:text-base uppercase tracking-widest">Hello!</h3>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mt-2">
