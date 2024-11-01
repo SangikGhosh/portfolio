@@ -95,7 +95,7 @@ function Navbar({ className }) {
               Journey
             </Link>
             
-            < a className="bg-[#fff] text-[#000] px-3 py-1 rounded-full flex items-center transition-shadow duration-300 hover:shadow-md font-semibold hover:shadow-white">
+            < a className="bg-[#fff] text-[#000] px-3 py-1 rounded-full flex items-center transition-shadow duration-300 hover:shadow-md font-semibold hover:shadow-white" href="https://api.whatsapp.com/send?phone=916295894643">
             <FontAwesomeIcon 
             icon={faWhatsapp} 
             style={{ color: "#0fd79b" }} 
@@ -112,7 +112,6 @@ function Navbar({ className }) {
     <Menu>
     <div className="flex absolute left-8">
       <a href="#" className="text-white">
-        {/* Add a hidden class for screens smaller than 1500px */}
         <img src={img} alt="" className="h-8 w-13 hidden xl:inline-block"/>
       </a>
     </div>
@@ -152,7 +151,7 @@ function Navbar({ className }) {
       <GiJourney className="inline-block mr-2 mb-1 hidden 2xl:inline-block" />
       Journey
     </Link>
-    <a className="bg-[#fff] text-[#111] px-3 py-1 rounded-full flex items-center transition-shadow duration-300 hover:shadow-md font-semibold hover:shadow-slate-400 cursor-pointer ">
+    <a className="bg-[#fff] text-[#111] px-3 py-1 rounded-full flex items-center transition-shadow duration-300 hover:shadow-md font-semibold hover:shadow-slate-400 cursor-pointer " href="https://api.whatsapp.com/send?phone=916295894643">
       <FontAwesomeIcon 
         icon={faWhatsapp} 
         style={{ color: "#0fd79b" }} 
