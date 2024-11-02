@@ -16,7 +16,7 @@ import img from "../../assets/filehider.png"
 export function BentoGridDemo() {
   return (
   
-    <div className="projects">
+    <div className="projects lg:pt-0 pt-20">
         <TextHoverEffect text="PROJECTS" id="projects"/>
         <BentoGrid className="max-w-7xl p-10">
       {items.map((item, i) => (
@@ -50,14 +50,8 @@ const items = [
   {
     title: "TECHHUB",
     description: "TechHub Club: Interactive platform for tech enthusiasts, built with React.",
-    header: <Skeleton image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThOXoOnZlxpuJojxKrpz7cop2tSTYJSZxsPg&s"/>,
+    header: <Skeleton image="https://mir-s3-cdn-cf.behance.net/projects/404/6d44db180048409.Y3JvcCw2MzkyLDQ5OTksMTQyLDA.jpg"/>,
     icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
-  },
-  {
-    title: "Social Media Using MERN Stack",
-    description: "Social media platform using MERN stack with authentication, posts, comments, and file uploads.",
-    header: <Skeleton image="https://www.searchenginejournal.com/wp-content/uploads/2021/09/16-reasons-why-social-media-is-important-to-your-company-616d3200e6dc6-sej-1280x720.png"/>,
-    icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
   },
   {
     title: "Render.com website",
@@ -69,13 +63,19 @@ const items = [
   {
     title: "Mobile Legend: Bang Bang Website",
     description: "MLBB (Mobile Legends: Bang Bang) is a fast-paced 5v5 MOBA game featuring strategic team battles, heroes with unique abilities, and real-time multiplayer action.",
-    header: <Skeleton image="https://mediapract.com/wp-content/uploads/2024/05/mlbb-edot-ph-mlbb.webp"/>,
+    header: <Skeleton image="https://i.ytimg.com/vi/QJTEBywtU-I/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGGUgWShLMA8=&rs=AOn4CLDzqMy8hvNoGiJt9VTQof7GEFRZVw"/>,
     icon: <IconArrowWaveRightUp className="h-4 w-4 text-neutral-500" />,
+  },
+  {
+    title: "Social Media Using MERN Stack",
+    description: "Social media platform using MERN stack with authentication, posts, comments, and file uploads.",
+    header: <Skeleton image="https://www.searchenginejournal.com/wp-content/uploads/2021/09/16-reasons-why-social-media-is-important-to-your-company-616d3200e6dc6-sej-1280x720.png"/>,
+    icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
   },
   {
     title: "FLUX.1 Website",
     description: "Flux.1 is an AI tool that generates detailed images from text prompts, offering fast and diverse outputs.",
-    header: <Skeleton image="https://flux1ai.com/images/showcase.jpg"/>,
+    header: <Skeleton image="https://www.trickyenough.com/wp-content/uploads/2024/08/Made-by-1.png"/>,
     icon: <IconBoxAlignTopLeft className="h-4 w-4 text-neutral-500" />,
   },
   {
