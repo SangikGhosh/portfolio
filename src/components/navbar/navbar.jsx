@@ -28,23 +28,23 @@ function Navbar({ className }) {
   return (
     
     <div className={cn("fixed inset-x-0 max-w-full mx-auto z-50", className)}>
-      <div className="w-full bg-black relative flex items-center justify-between px-4 py-2"> {/* Added flex layout and padding */}
-    <a href="#" className="text-white">
-        <img 
-          src={img} 
-          alt="" 
-          className="h-8 w-13 bg-transparent rounded-md" 
-          style={{ backgroundColor: 'transparent' }} 
-        />
-    </a>
+      <div className="w-full bg-black xl:hidden flex items-center justify-between px-4 py-2"> {/* Added flex layout and padding */}
+        <a href="#" className="text-white">
+          <img 
+            src={img} 
+            alt="" 
+            className="h-8 w-13 bg-transparent xl:hidden rounded-md" 
+            style={{ backgroundColor: 'transparent' }} 
+          />
+        </a>
 
-    <button 
-      className="block xl:hidden text-[#ff1818] p-2 rounded-md" 
-      onClick={() => setIsDrawerOpen(true)}
-    > 
-      <IoMenu className="text-4xl bg-transparent" />
-    </button>
-</div>
+        <button 
+        className="block xl:hidden text-[#ff1818] p-2 rounded-md" 
+        onClick={() => setIsDrawerOpen(true)}
+        > 
+        <IoMenu className="text-4xl bg-transparent" />
+        </button>
+      </div>
 
 
 
@@ -119,7 +119,7 @@ function Navbar({ className }) {
       </div>
 
     {/* Full Navbar for larger screens */}
-    <div className="hidden xl:flex items-center space-x-6 bg-transparent p-2">
+    <div className="hidden xl:flex items-center space-x-6 bg-transparent">
     <Menu>
     <div className="bg-transparent">
   <div className="absolute bg-transparent left-8">
