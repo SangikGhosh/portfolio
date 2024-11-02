@@ -101,7 +101,7 @@ export const TextHoverEffect = ({
         textAnchor="middle"
         dominantBaseline="middle"
         strokeWidth="0.3"
-        className={`font-[helvetica] font-bold stroke-neutral-500 tracking-tight hover:dark:stroke-neutral-900 fill-transparent text-3xl`}
+        className={`font-[helvetica] font-bold lg:stroke-neutral-500 stroke-neutral-300 tracking-tight hover:dark:stroke-neutral-900 fill-transparent text-3xl`}
       >
         {text}
       </text>
