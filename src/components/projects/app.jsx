@@ -12,11 +12,11 @@ import {
 import { div } from "framer-motion/client";
 // import { TextHoverEffectDemo } from "../GlowText/App";
 import { TextHoverEffect } from "../GlowText/ui";
-
+import img from "../../assets/filehider.png"
 export function BentoGridDemo() {
   return (
   
-    <div>
+    <div className="projects">
         <TextHoverEffect text="PROJECTS" id="projects"/>
         <BentoGrid className="max-w-7xl p-10">
       {items.map((item, i) => (
@@ -42,9 +42,9 @@ const Skeleton = ({ image }) => (
 
 const items = [
   {
-    title: "DISCORD",
-    description: "Community-driven platform for sharing ideas, projects, and collaboration.",
-    header: <Skeleton image="https://techcrunch.com/wp-content/uploads/2021/05/Discord_IAP_KeyVisuals_Header_02.jpeg"/>,
+    title: "ChatBuzz - Real time web chat application",
+    description: "ChatBuzz is a real-time chat app built with React, Express, Node.js, and MongoDB, featuring secure authentication and seamless user communication.",
+    header: <Skeleton image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6TOU4rBTi8ucigEZ5_RdB7auzNKzGYncvIA&s"/>,
     icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
   },
   {
@@ -67,7 +67,7 @@ const items = [
     icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "MLBB.com",
+    title: "Mobile Legend: Bang Bang Website",
     description: "MLBB (Mobile Legends: Bang Bang) is a fast-paced 5v5 MOBA game featuring strategic team battles, heroes with unique abilities, and real-time multiplayer action.",
     header: <Skeleton image="https://mediapract.com/wp-content/uploads/2024/05/mlbb-edot-ph-mlbb.webp"/>,
     icon: <IconArrowWaveRightUp className="h-4 w-4 text-neutral-500" />,
@@ -79,9 +79,9 @@ const items = [
     icon: <IconBoxAlignTopLeft className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "Movie Recommendation System",
-    description: "This is a machine learning-based Movie Recommendation System built to suggest movies based on user preferences. The model analyzes patterns in the data and recommends movies using content-based filtering.",
-    header: <Skeleton image="https://github.com/MRWICKJ/movie-recommendation/raw/main/img1.png"/>,
+    title: "Flie Hideing System(from local storage)",
+    description: "A secure service that allows users to hide files by encrypting them, making them inaccessible to unauthorized users. This service sends OTPs for verification and ensures data integrity with a clean and user-friendly interface.",
+    header: <Skeleton image= {img}/>,
     icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
   },
 ];
