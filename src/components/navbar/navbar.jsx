@@ -12,7 +12,7 @@ import { GiJourney } from "react-icons/gi";
 import { Link } from "react-scroll";  // Import from react-scroll for smooth scrolling
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import img from "../../assets/sgp.png"
+import img from "../../assets/sg1.png"
 
 export function NavbarDemo() {
   return (
@@ -28,20 +28,25 @@ function Navbar({ className }) {
   return (
     
     <div className={cn("fixed inset-x-0 max-w-full mx-auto z-50", className)}>
-        
-      
-      {/* Mobile Menu Button */}
-      <button
-        className="block xl:hidden p-2 text-white absolute top-4 right-4"
-        onClick={() => setIsDrawerOpen(true)}
-      >
-        <IoMenu className="text-4xl"/>
-      </button>
-      <div className="z-50 flex relative left-8 bg-slate-200 h-0">
-        <a href="#" className="text-white">
-          <img src={img} alt="" className="h-8 w-13 xl:hidden mt-7 bg-transparent rounded-md" style={{ backgroundColor: 'transparent' }}/>
-        </a>
-      </div>
+      <div className="w-full bg-black relative flex items-center justify-between px-4 py-2"> {/* Added flex layout and padding */}
+    <a href="#" className="text-white">
+        <img 
+          src={img} 
+          alt="" 
+          className="h-8 w-13 bg-transparent rounded-md" 
+          style={{ backgroundColor: 'transparent' }} 
+        />
+    </a>
+
+    <button 
+      className="block xl:hidden text-[#ff1818] p-2 rounded-md" 
+      onClick={() => setIsDrawerOpen(true)}
+    > 
+      <IoMenu className="text-4xl bg-transparent" />
+    </button>
+</div>
+
+
 
       {/* Drawer for Mobile */}
       <div
@@ -116,45 +121,48 @@ function Navbar({ className }) {
     {/* Full Navbar for larger screens */}
     <div className="hidden xl:flex items-center space-x-6 bg-transparent p-2">
     <Menu>
-    <div className="flex absolute left-8">
-      <a href="#" className="text-white">
-        <img src={img} alt="" className="h-8 w-13 hidden xl:inline-block"/>
-      </a>
-    </div>
+    <div className="bg-transparent">
+  <div className="absolute bg-transparent left-8">
+    <a href="#" className="text-white bg-transparent">
+    <img src={img} alt="" className="h-8 w-13 xl:inline-block bg-transparent" />
+    </a>
+  </div>
+</div>
+
     <Link
       to="home"
       smooth={true}
       duration={1000}
-      className="text-white hover:text-slate-300 transition-colors duration-300 font-semibold pt-0.5 cursor-pointer"
+      className="text-white bg-transparent hover:text-slate-300 transition-colors duration-300 font-semibold pt-0.5 cursor-pointer"
     >
-      <IoHome className="inline-block mr-2 mb-1 hidden 2xl:inline-block" />
+      <IoHome className="inline-block bg-transparent mr-2 mb-1 hidden 2xl:inline-block" />
       Home
     </Link>
     <Link
       to="projects"
       smooth={true}
       duration={1000}
-      className="text-white transition-colors duration-300 font-semibold pt-0.5 cursor-pointer hover:text-slate-300"
+      className="text-white transition-colors bg-transparent duration-300 font-semibold pt-0.5 cursor-pointer hover:text-slate-300"
     >
-      <TbReportAnalytics className="inline-block mr-2 mb-1 hidden 2xl:inline-block" />
+      <TbReportAnalytics className="inline-block bg-transparent mr-2 mb-1 hidden 2xl:inline-block" />
       Projects
     </Link>
     <Link
       to="achievements"
       smooth={true}
       duration={1000}
-      className="text-white transition-colors duration-300 font-semibold pt-0.5 cursor-pointer hover:text-slate-300"
+      className="text-white transition-colors bg-transparent duration-300 font-semibold pt-0.5 cursor-pointer hover:text-slate-300"
     >
-      <GrAchievement className="inline-block mr-2 mb-1 hidden 2xl:inline-block" />
+      <GrAchievement className="inline-block mr-2 bg-transparent mb-1 hidden 2xl:inline-block" />
       Achievements
     </Link>
     <Link
       to="journey"
       smooth={true}
       duration={1000}
-      className="text-white transition-colors duration-300 font-semibold pt-0.5 cursor-pointer hover:text-slate-300"
+      className="text-white transition-colors bg-transparent duration-300 font-semibold pt-0.5 cursor-pointer hover:text-slate-300"
     >
-      <GiJourney className="inline-block mr-2 mb-1 hidden 2xl:inline-block" />
+      <GiJourney className="inline-block bg-transparent mr-2 mb-1 hidden 2xl:inline-block" />
       Journey
     </Link>
     <a className="bg-[#fff] text-[#111] px-3 py-1 rounded-full flex items-center transition-shadow duration-300 hover:shadow-md font-semibold hover:shadow-slate-400 cursor-pointer " href="https://api.whatsapp.com/send?phone=916295894643">
