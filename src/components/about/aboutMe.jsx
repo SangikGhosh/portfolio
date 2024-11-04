@@ -1,29 +1,61 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import img from "../../assets/removebg.png";
 import { TextHoverEffect } from '../GlowText/ui';
 
 const AboutMe = () => {
   const [projectCount, setProjectCount] = useState(0);
-  const targetProjectCount = 120;
+  const targetProjectCount = 12;
+  const animationDuration = 1000;
+  const sectionRef = useRef(null);
+
+  const animateCount = () => {
+    let startTime;
+
+    const countUp = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+
+      const progress = Math.min(elapsed / animationDuration, 1);
+      const currentCount = Math.floor(progress * targetProjectCount);
+
+      setProjectCount(currentCount);
+
+      if (progress < 1) {
+        requestAnimationFrame(countUp);
+      }
+    };
+
+    requestAnimationFrame(countUp);
+  };
 
   useEffect(() => {
-    if (projectCount < targetProjectCount) {
-      const interval = setInterval(() => {
-        setProjectCount((prevCount) => {
-          const nextCount = prevCount + 1; // Increment by 1 for a slower count-up
-          if (nextCount >= targetProjectCount) {
-            clearInterval(interval);
-            return targetProjectCount;
-          }
-          return nextCount;
-        });
-      }, 400); // Slower interval for a gradual effect
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setProjectCount(0); // Reset count
+          animateCount(); // Start the count animation
+        }
+      },
+      { threshold: 0.5 } // Adjust this threshold as needed
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
-  }, [projectCount]);
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
 
   return (
     <>
-      <div className="aboutMe flex items-center justify-center bg-black text-white px-4 md:px-6 lg:px-8 xl:px-0 min-h-screen">
+      <div
+        ref={sectionRef}
+        className="aboutMe flex items-center justify-center bg-black text-white px-4 md:px-6 lg:px-8 xl:px-0 min-h-screen"
+      >
         <div className="flex flex-col md:flex-row items-center gap-4 lg:gap-8 max-w-5xl w-full lg:justify-center">
           {/* Image Section - Visible only on large screens and above */}
           <div className="relative hidden lg:block">
