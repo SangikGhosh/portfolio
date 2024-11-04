@@ -101,9 +101,11 @@ const AboutMe = () => {
                 <span className="font-bold text-yellow-500">{projectCount}</span> Project complete
               </p>
               <div className="pt-4">
+                <a href="https://drive.google.com/uc?export=download&id=1-DcPqiG4X37oJsQl0yPLl1MY-vSDv3sv">
                 <button className="bg-gradient-to-r from-blue-500 to-purple-500 text-black font-semibold py-2 px-6 rounded-full transition duration-300 hover:brightness-[0.8] text-sm sm:text-base lg:text-lg">
                   DOWNLOAD CV
                 </button>
+                </a>
               </div>
             </div>
           </div>

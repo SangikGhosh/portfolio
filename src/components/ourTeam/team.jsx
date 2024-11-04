@@ -45,7 +45,7 @@ const Team = () => {
     const [member, setMember] = useState(0);
 
     return (
-        <div className="relative mx-auto py-10 w-full max-w-full bg-black text-white shadow-2xl">
+        <div className="ourTeam relative mx-auto py-10 w-full max-w-full bg-black text-white shadow-2xl">
             <TextHoverEffect text="OUR TEAM" id="team" />
 
             <div className="mx-auto px-4 w-full max-w-5xl grid grid-cols-2 gap-y-10">

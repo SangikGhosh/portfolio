@@ -11,6 +11,7 @@ import { Link } from "react-scroll";  // Import from react-scroll for smooth scr
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import img from "../../assets/sg1.png"
+import { MdGroups } from "react-icons/md";
 
 export function NavbarDemo() {
   return (
@@ -99,6 +100,15 @@ function Navbar({ className }) {
               Projects
             </Link>
             <Link
+              to="ourTeam"
+              smooth={true}
+              duration={1000}
+              className="text-white transition-colors duration-300"
+            >
+            <MdGroups className="inline-block mr-2 mb-2" />
+            Our Team
+            </Link>
+            <Link
               to="achievements"
               smooth={true}
               duration={1000}
@@ -172,6 +182,15 @@ function Navbar({ className }) {
     
     <MenuItem setActive={setActive} active={active} item="Others" className="font-semibold bg-transparent" >
             <div className="flex flex-col space-y-4 bg-transparent">
+            <Link
+              to="ourTeam"
+              smooth={true}
+              duration={1000}
+              className="text-white transition-colors bg-transparent duration-300 font-semibold pt-0.5 cursor-pointer hover:text-slate-300"
+            >
+            <MdGroups className="inline-block mr-2 bg-transparent mb-1 hidden 2xl:inline-block" />
+            Our Team
+            </Link>
             <Link
               to="achievements"
               smooth={true}
