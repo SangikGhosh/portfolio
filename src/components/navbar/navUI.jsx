@@ -17,13 +17,13 @@ const transition = {
 export const MenuItem = ({ setActive, active, item, children }) => {
   return (
     <div onMouseEnter={() => setActive(item) 
-    } className="relative">
+    } className="relative bg-transparent">
       <motion.p
         transition={{ duration: 0.3 }}
-        className="cursor-pointer text-black hover:opacity-[0.9] dark:text-white text-sm pt-1"
+        className="cursor-pointer hover:opacity-[0.9] text-white bg-transparent font-semibold pt-1"
       >
         {item}
-      <IoIosArrowDown className="inline-block text-white ml-2"/>
+      <IoIosArrowDown className="inline-block bg-transparent text-white ml-2"/>
       </motion.p>
       {active !== null && (
         <motion.div
@@ -32,7 +32,7 @@ export const MenuItem = ({ setActive, active, item, children }) => {
           transition={transition}
         >
           {active === item && (
-            <div className="absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2 pt-4">
+            <div className="absolute top-[calc(100%_+_0.6rem)] left-1/2 transform bg-transparent -translate-x-1/2 pt-4">
               <motion.div
                 transition={transition}
                 layoutId="active"

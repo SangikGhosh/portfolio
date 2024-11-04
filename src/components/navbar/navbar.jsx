@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { Menu } from "./navUI"; 
+import { Menu, MenuItem } from "./navUI"; 
 import { cn } from "../../lib/utils";
 import { IoHome, IoCloseSharp, IoMenu, IoSettings } from "react-icons/io5";
 import { TbReportAnalytics } from "react-icons/tb";
-import { FaUser } from "react-icons/fa";
-import { MdDashboard } from "react-icons/md";
+import { FaAccusoft } from "react-icons/fa";
 import { TfiAnnouncement } from "react-icons/tfi";
 import { GrAchievement } from "react-icons/gr";
-import { PiContactlessPaymentFill } from "react-icons/pi";
 import { GiJourney } from "react-icons/gi";
 import { Link } from "react-scroll";  // Import from react-scroll for smooth scrolling
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,8 +21,13 @@ export function NavbarDemo() {
 }
 
 function Navbar({ className }) {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
+  const [active, setActive] = useState(false);
+  const getActiveClass = (path) =>
+    location.pathname === path
+      ? "text-blue-500 font-bold"
+      : "text-white";
   return (
     
     <div className={cn("fixed inset-x-0 max-w-full mx-auto z-50", className)}>
@@ -76,6 +79,16 @@ function Navbar({ className }) {
               Home
             </Link>
             <Link
+              to="aboutMe"
+              smooth={true}
+              duration={1000}
+              className="text-white transition-colors duration-300"
+              onClick={() => setIsDrawerOpen(false)}
+            >
+              <FaAccusoft className="inline-block mr-2 mb-2" />
+              About
+            </Link>
+            <Link
               to="projects"
               smooth={true}
               duration={1000}
@@ -120,10 +133,10 @@ function Navbar({ className }) {
 
     {/* Full Navbar for larger screens */}
     <div className="hidden xl:flex items-center space-x-6 bg-transparent">
-    <Menu>
+    <Menu setActive={setActive}>
     <div className="bg-transparent">
   <div className="absolute bg-transparent left-8">
-    <a href="#" className="text-white bg-transparent">
+    <a className="text-white bg-transparent">
     <img src={img} alt="" className="h-8 w-13 xl:inline-block bg-transparent" />
     </a>
   </div>
@@ -139,6 +152,15 @@ function Navbar({ className }) {
       Home
     </Link>
     <Link
+      to="aboutMe"
+      smooth={true}
+      duration={1000}
+      className="text-white bg-transparent hover:text-slate-300 transition-colors duration-300 font-semibold pt-0.5 cursor-pointer"
+    >
+      <FaAccusoft className="inline-block bg-transparent mr-2 mb-1 hidden 2xl:inline-block" />
+      About
+    </Link>
+    <Link
       to="projects"
       smooth={true}
       duration={1000}
@@ -147,24 +169,29 @@ function Navbar({ className }) {
       <TbReportAnalytics className="inline-block bg-transparent mr-2 mb-1 hidden 2xl:inline-block" />
       Projects
     </Link>
-    <Link
-      to="achievements"
-      smooth={true}
-      duration={1000}
-      className="text-white transition-colors bg-transparent duration-300 font-semibold pt-0.5 cursor-pointer hover:text-slate-300"
-    >
-      <GrAchievement className="inline-block mr-2 bg-transparent mb-1 hidden 2xl:inline-block" />
-      Achievements
-    </Link>
-    <Link
-      to="journey"
-      smooth={true}
-      duration={1000}
-      className="text-white transition-colors bg-transparent duration-300 font-semibold pt-0.5 cursor-pointer hover:text-slate-300"
-    >
-      <GiJourney className="inline-block bg-transparent mr-2 mb-1 hidden 2xl:inline-block" />
-      Journey
-    </Link>
+    
+    <MenuItem setActive={setActive} active={active} item="Others" className="font-semibold bg-transparent" >
+            <div className="flex flex-col space-y-4 bg-transparent">
+            <Link
+              to="achievements"
+              smooth={true}
+              duration={1000}
+              className="text-white transition-colors bg-transparent duration-300 font-semibold pt-0.5 cursor-pointer hover:text-slate-300"
+            >
+              <GrAchievement className="inline-block mr-2 bg-transparent mb-1 hidden 2xl:inline-block" />
+              Achievements
+            </Link>
+            <Link
+              to="journey"
+              smooth={true}
+              duration={1000}
+              className="text-white transition-colors bg-transparent duration-300 font-semibold pt-0.5 cursor-pointer hover:text-slate-300"
+            >
+              <GiJourney className="inline-block bg-transparent mr-2 mb-1 hidden 2xl:inline-block" />
+              Journey
+            </Link> 
+            </div>
+          </MenuItem>
     <a className="bg-[#fff] text-[#111] px-3 py-1 rounded-full flex items-center transition-shadow duration-300 hover:shadow-md font-semibold hover:shadow-slate-400 cursor-pointer " href="https://api.whatsapp.com/send?phone=916295894643">
       <FontAwesomeIcon 
         icon={faWhatsapp} 

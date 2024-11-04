@@ -3,8 +3,9 @@ import { motion } from "framer-motion";
 
 export const TextHoverEffect = ({
   text,
-  size,
+  size = "3xl", // Default size if not specified
   duration = 2, // Default duration for animation
+  border = 0.3, // Default stroke width if not specified
   glowColors = {
     stop1: "var(--yellow-500)",
     stop2: "var(--red-500)",
@@ -12,7 +13,7 @@ export const TextHoverEffect = ({
     stop4: "var(--cyan-500)",
     stop5: "var(--violet-500)",
   },
-  id // Unique ID for gradient
+  id, // Unique ID for gradient
 }) => {
   const svgRef = useRef(null);
   const [maskPosition, setMaskPosition] = useState({ cx: "50%", cy: "50%" });
@@ -23,7 +24,7 @@ export const TextHoverEffect = ({
         const svgRect = svgRef.current.getBoundingClientRect();
         const cxPercentage = ((e.clientX - svgRect.left) / svgRect.width) * 100;
         const cyPercentage = ((e.clientY - svgRect.top) / svgRect.height) * 100;
-        // Use requestAnimationFrame for smoother updates
+        
         requestAnimationFrame(() =>
           setMaskPosition({
             cx: `${cxPercentage}%`,
@@ -43,7 +44,7 @@ export const TextHoverEffect = ({
     <svg
       ref={svgRef}
       width="100%"
-      height="100%"
+      height="auto"
       viewBox="0 0 300 100"
       xmlns="http://www.w3.org/2000/svg"
       className="select-none"
@@ -60,7 +61,7 @@ export const TextHoverEffect = ({
             x2: ["100%", "0%", "100%"],
           }}
           transition={{
-            duration: 3, // Duration for each glow pulse cycle
+            duration: duration,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -100,8 +101,8 @@ export const TextHoverEffect = ({
         y="50%"
         textAnchor="middle"
         dominantBaseline="middle"
-        strokeWidth="0.3"
-        className={`font-[helvetica] font-bold lg:stroke-neutral-500 stroke-neutral-300 tracking-tight hover:dark:stroke-neutral-900 fill-transparent text-3xl`}
+        strokeWidth={border} // Apply the dynamic border/stroke width
+        className={`font-[helvetica] font-bold lg:stroke-neutral-500 stroke-neutral-300 tracking-tight fill-transparent text-${size}`}
       >
         {text}
       </text>
@@ -113,9 +114,9 @@ export const TextHoverEffect = ({
         textAnchor="middle"
         dominantBaseline="middle"
         stroke={`url(#textGradient-${id})`} // Animated gradient
-        strokeWidth="0.3"
+        strokeWidth={border} // Apply the dynamic border/stroke width
         mask={`url(#textMask-${id})`} // Mask applied
-        className={`font-[helvetica] font-bold tracking-tight text-3xl`}
+        className={`font-[helvetica] font-bold tracking-tight text-${size}`}
       >
         {text}
       </text>

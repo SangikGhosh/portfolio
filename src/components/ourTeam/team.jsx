@@ -9,7 +9,7 @@ const Team = () => {
             lastname: "Ghosh",
             role: "Java Developer",
             picture: "https://avatars.githubusercontent.com/u/136787875?v=4",
-            description: "Looking for a Junior Java Developer eager to learn and grow. Basic Java knowledge required. Work under senior developers and assist in application development.",
+            description: "Join us as a Java Software Engineer to develop robust applications. Strong Java and web technology skills required. Familiarity with Agile and version control is a plus.",
             facebookURL: "#link",
             linkedinURL: "#link",
         },
@@ -36,7 +36,7 @@ const Team = () => {
             lastname: "Jha",
             role: "Java Developer",
             picture: "https://avatars.githubusercontent.com/u/80311301?v=4",
-            description: "Join us as a Java Software Engineer to develop robust applications. Strong Java and web technology skills required. Familiarity with Agile and version control is a plus.",
+            description: "Looking for a Junior Java Developer eager to learn and grow. Basic Java knowledge required. Work under senior developers and assist in application development.",
             facebookURL: "#link",
             linkedinURL: "#link",
         },
@@ -53,7 +53,7 @@ const Team = () => {
                 <div className="col-span-full lg:col-span-1 flex flex-col sm:flex-row justify-center items-center">
                     <ul className="mb-4 sm:mb-0 px-4 flex sm:flex-col justify-center items-center space-x-3 sm:space-x-0 sm:space-y-3">
                         {people.map((person, index) => (
-                            <li key={person.lastname} className={`w-14 h-14 border-2 border-green-600 rounded-full overflow-hidden ${index !== member ? "saturate-0 hover:brightness-125 transform transition-all duration-300" : "saturate-100"}`}>
+                            <li key={person.lastname} className={`w-14 h-14 border-[3px] border-green-600 rounded-full overflow-hidden ${index !== member ? "saturate-0 hover:brightness-125 transform transition-all duration-300" : "saturate-100"}`}>
                                 <button className="w-full h-full" onClick={() => setMember(index)}>
                                     <img src={person.picture} alt={`${person.firstname} ${person.lastname}`} className="object-cover" />
                                 </button>
@@ -62,9 +62,9 @@ const Team = () => {
                     </ul>
                     
                     <div className="rounded overflow-hidden">
-                        <DirectionAwareHover imageUrl={people[member].picture} className="w-full max-w-xs object-cover" >
-                        <p className="font-bold bg-transparent text-xl">{people[member].firstname} {people[member].lastname}</p>
-                            {/* <img src={people[member].picture} alt={`${people[member].firstname} ${people[member].lastname}`}/> */}
+                            <img src={people[member].picture} alt={`${people[member].firstname} ${people[member].lastname}`} className="md:hidden w-full max-w-xs object-cover"/>
+                        <DirectionAwareHover imageUrl={people[member].picture} className="hidden md:flex w-full max-w-xs object-cover" >
+                            <p className="font-bold bg-transparent text-xl">{people[member].firstname} {people[member].lastname}</p>
                         </DirectionAwareHover>
                     </div>
                 </div>
