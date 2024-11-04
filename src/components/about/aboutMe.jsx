@@ -17,7 +17,7 @@ const AboutMe = () => {
           }
           return nextCount;
         });
-      }, 200); // Slower interval for a gradual effect
+      }, 400); // Slower interval for a gradual effect
     }
   }, [projectCount]);
 
