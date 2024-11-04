@@ -56,7 +56,7 @@ const AboutMe = () => {
         ref={sectionRef}
         className="aboutMe flex items-center justify-center bg-black text-white px-4 md:px-6 lg:px-8 xl:px-0 min-h-screen"
       >
-        <div className="flex flex-col md:flex-row items-center gap-4 lg:gap-8 max-w-5xl w-full lg:justify-center">
+        <div className="flex flex-col md:flex-row items-center gap-4 lg:gap-8 max-w-5xl w-full md:justify-center lg:justify-between lg:items-center">
           {/* Image Section - Visible only on large screens and above */}
           <div className="relative hidden lg:block">
             <img
@@ -67,7 +67,7 @@ const AboutMe = () => {
           </div>
 
           {/* Info Section */}
-          <div className="space-y-6 text-left pl-6 sm:pl-16 md:pl-0 w-full md:w-auto">
+          <div className="space-y-6 text-left pl-2 sm:pl-16 w-full md:w-auto md:text-left">
             <TextHoverEffect className="left-0" text="About Me" size="4xl" border={0.8} />
 
             <p className="text-gray-400 text-sm sm:text-base md:text-lg lg:text-[1.15rem] max-w-md">
@@ -75,7 +75,7 @@ const AboutMe = () => {
             </p>
 
             {/* Personal Information */}
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-gray-400 text-sm sm:text-base md:text-lg lg:text-[1.15rem]">
+            <div className="grid grid-cols-2 gap-x-0 gap-y-2 text-gray-400 text-sm sm:text-base md:text-lg lg:text-[1.15rem]">
               <span className="text-white font-semibold">Name:</span>
               <span>Sangik Ghosh</span>
 
