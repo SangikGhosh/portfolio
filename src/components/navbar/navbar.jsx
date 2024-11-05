@@ -104,6 +104,7 @@ function Navbar({ className }) {
               smooth={true}
               duration={1000}
               className="text-white transition-colors duration-300"
+              onClick={() => setIsDrawerOpen(false)}
             >
             <MdGroups className="inline-block mr-2 mb-2" />
             Our Team
