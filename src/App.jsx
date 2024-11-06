@@ -4,6 +4,7 @@ import { NavbarDemo } from './components/navbar/navbar'
 import { BentoGridDemo } from './components/projects/app'
 import Team from './components/ourTeam/team'
 import AboutMe from './components/about/aboutMe'
+import LeetCodeProgress from './components/LeetCode/leetcode'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
     <AboutMe/>
     <BentoGridDemo/>
     <Team/>
+    <LeetCodeProgress/>
     </>
   )
 }
