@@ -5,6 +5,8 @@ import { BentoGridDemo } from './components/projects/app'
 import Team from './components/ourTeam/team'
 import AboutMe from './components/about/aboutMe'
 import LeetCodeProgress from './components/LeetCode/leetcode'
+import LeetcodeCal from './components/Leetcode/calender'
+import Mygithub from './components/GithubRepo/github'
 
 function App() {
 
@@ -16,6 +18,8 @@ function App() {
     <BentoGridDemo/>
     <Team/>
     <LeetCodeProgress/>
+    <LeetcodeCal/>
+    <Mygithub/>
     </>
   )
 }

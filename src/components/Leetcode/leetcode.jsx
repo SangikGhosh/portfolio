@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import { RiCopperCoinFill } from "react-icons/ri";
 import PropTypes from "prop-types";
+import { TextHoverEffect } from "../GlowText/ui";
 
 const LeetCodeProgress = () => {
   const [progress, setProgress] = useState(null);
@@ -42,7 +43,10 @@ const LeetCodeProgress = () => {
   if (!progress) return <div>No data available.</div>;
 
   return (
-<div className="dark:bg-[#000000] min-h-screen flex flex-col items-center justify-center py-10 bg-[#000000]">
+    <>
+    
+<div className="achievements dark:bg-[#000000] min-h-screen flex flex-col items-center justify-center py-10 bg-[#000000]">
+<TextHoverEffect text="ACHIEVEMENTS" id="achievements" />
   <div className="container mx-auto p-8 bg-[#1a1a1a] rounded-xl shadow-xl max-w-6xl lg:px-12 xl:max-w-7xl">
     {/* Profile Section */}
     <div className="flex flex-col items-center md:flex-row md:items-center mb-12 bg-[#1a1a1a]">
@@ -135,7 +139,7 @@ const LeetCodeProgress = () => {
     )}
   </div>
 </div>
-
+</>
   );
 };
 
