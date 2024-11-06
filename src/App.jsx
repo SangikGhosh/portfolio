@@ -7,6 +7,9 @@ import AboutMe from './components/about/aboutMe'
 import LeetCodeProgress from './components/LeetCode/leetcode'
 import LeetcodeCal from './components/Leetcode/calender'
 import Mygithub from './components/GithubRepo/github'
+import SkillsSection from './components/Skills/skills'
+import GithubCal from './components/GithubRepo/GitCalender'
+import Landing from "./components/contact/contact"
 
 function App() {
 
@@ -20,6 +23,9 @@ function App() {
     <LeetCodeProgress/>
     <LeetcodeCal/>
     <Mygithub/>
+    <GithubCal/>
+    <SkillsSection/>
+    <Landing/>
     </>
   )
 }

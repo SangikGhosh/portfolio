@@ -34,7 +34,7 @@ const Mygithub = () => {
           alt="Profile"
           className="w-20 h-20 rounded-full mr-4 border-4 border-gray-300 dark:border-gray-700"
         />
-        <h1 className="text-4xl font-bold">{profile.name}</h1>
+        <h1 className="lg:text-4xl text-2xl sm:text-3xl font-bold">{profile.name}</h1>
       </div>
 
       <h2 className="text-2xl font-semibold mb-4">GitHub Repositories</h2>

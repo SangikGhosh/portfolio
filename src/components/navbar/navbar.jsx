@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import img from "../../assets/sg1.png"
 import { MdGroups } from "react-icons/md";
+import { ImEmbed2 } from "react-icons/im";
 
 export function NavbarDemo() {
   return (
@@ -120,6 +121,16 @@ function Navbar({ className }) {
               Achievements
             </Link>
             <Link
+              to="skills"
+              smooth={true}
+              duration={1000}
+              className="text-white transition-colors duration-300"
+              onClick={() => setIsDrawerOpen(false)}
+            >
+              <ImEmbed2 className="inline-block mr-2 mb-2" />
+              Skills
+            </Link>
+            <Link
               to="journey"
               smooth={true}
               duration={1000}
@@ -200,6 +211,15 @@ function Navbar({ className }) {
             >
               <GrAchievement className="inline-block mr-2 bg-transparent mb-1 hidden 2xl:inline-block" />
               Achievements
+            </Link>
+            <Link
+              to="skills"
+              smooth={true}
+              duration={1000}
+              className="text-white transition-colors bg-transparent duration-300 font-semibold pt-0.5 cursor-pointer hover:text-slate-300"
+            >
+              <ImEmbed2 className="inline-block mr-2 bg-transparent mb-1 hidden 2xl:inline-block" />
+              Skills
             </Link>
             <Link
               to="journey"
