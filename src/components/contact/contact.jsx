@@ -67,21 +67,23 @@ const Landing = () => {
 
   return (
     <div id="contact" className="flex items-center justify-center min-h-screen bg-black">
-      <div className="flex w-full max-w-5xl bg-white rounded-lg shadow-lg lg:flex">
+      <div className="flex sm:w-5/6 md:w-5/6 w-11/12 max-w-5xl bg-white rounded-xl shadow-lg flex-col md:flex-row">
         
         {/* GIF Section */}
-        <div className="hidden lg:block lg:w-1/2">
+        <div className="w-full lg:w-1/2 h-64 sm:h-72 md:h-auto rounded-t-xl overflow-hidden md:rounded-l-xl md:rounded-tr-none">
           <img
             src={gifs[currentGifIndex]}
             alt="Rotating GIFs"
-            className="object-cover w-full h-full bg-zinc-900 rounded-l-lg"
+            className="object-cover w-full h-full"
           />
         </div>
+
+
         
         {/* Form Section */}
-        <div className="w-full lg:w-1/2 p-8 lg:p-12 bg-gray-100 rounded-r-lg">
+        <div className="w-full lg:w-1/2 p-8 lg:p-12 bg-gray-100 rounded-b-xl md:rounded-r-xl">
           <form onSubmit={onSubmit} className="space-y-6 bg-gray-100">
-            <div className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-gray-100 text-center mb-6 bg-clip-text text-transparent">Let's Connect!</div>
+            <div className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600  text-center mb-6 bg-clip-text text-transparent">Let's Connect!</div>
             
             {/* Name Field */}
             <div className="bg-gray-100">
@@ -89,7 +91,7 @@ const Landing = () => {
                 type="text"
                 name="name"
                 placeholder="Your Name"
-                className="block w-full py-3 px-4 bg-gray-100 border border-gray-300 rounded-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="block w-full py-2 px-4 md:py-3 md:px-4 bg-gray-100 border border-gray-300 rounded-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -100,35 +102,27 @@ const Landing = () => {
                 type="email"
                 name="email"
                 placeholder="Your Email"
-                className="block w-full py-3 px-4 bg-gray-100 border border-gray-300 rounded-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"                
+                className="block w-full py-2 px-4 md:py-3 md:px-4 bg-gray-100 border border-gray-300 rounded-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"                
                 required
               />
             </div>
             
-            {/* Subject Field */}
-            <div className="bg-gray-100">
-              <input
-                type="text"
-                name="subject"
-                placeholder="Subject"
-                className="block w-full py-3 px-4 bg-gray-100 border border-gray-300 rounded-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
+            
+            
             
             {/* Message Field */}
-            <div className="bg-gray-100">
+            <div  className="bg-gray-100">
               <textarea
                 name="message"
                 placeholder="Message"
-                className="block w-full py-3 px-4 bg-gray-100 border border-gray-300 rounded-md text-gray-800 placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="block w-full py-2 px-4 md:py-3 md:px-4 bg-gray-100 border border-gray-300 rounded-md text-gray-800 placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
                 rows="4"
                 required
               ></textarea>
             </div>
             
             {/* Result Message Placeholder */}
-            <div className="h-6 text-center text-green-600 bg-gray-100">
+            <div className="h-[0.1rem] md:h-6 text-center bg-gray-100 text-green-600">
               {result || <span></span>}
             </div>
             
@@ -136,7 +130,7 @@ const Landing = () => {
             <div className="flex justify-center bg-gray-100">
               <button
                 type="submit"
-                className="px-8 py-3 font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-full shadow-2xl hover:brightness-90 transition transform duration-300 focus:outline-none"
+                className="px-5 py-2 md:px-8 md:py-3 font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-2xl hover:brightness-90 transition transform duration-300"
               >
                 Wave Me👋
               </button>
