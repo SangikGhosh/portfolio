@@ -22,7 +22,7 @@ const Homepage = () => {
           <p className="text-gray-300 mt-4 text-sm sm:text-base md:text-lg lg:text-xl">
           Creating powerful, seamless solutions across mobile, web, and backend with a drive for excellence.          </p>
           <div className="mt-6 flex flex-col sm:flex-row gap-4">
-            <a href="#hire-me" className="bg-gradient-to-r tracking-widest from-blue-500 to-purple-500 text-black font-semibold py-2 px-6 rounded-full transform transition duration-300 hover:opacity-90">
+            <a href="#contact" className="bg-gradient-to-r tracking-widest from-blue-500 to-purple-500 text-black font-semibold py-2 px-6 rounded-full transform transition duration-300 hover:opacity-90">
               SAY HELLO👋
             </a>
             <a href="#my-works" className="border  border-gray-300 text-gray-300 font-semibold py-2 px-6 rounded-full hover:border-sky-400 hover:text-white transform transition duration-600">
