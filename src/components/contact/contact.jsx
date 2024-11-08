@@ -66,6 +66,7 @@ const Landing = () => {
   };
 
   return (
+    <>
     <div id="contact" className="flex items-center justify-center min-h-screen bg-black">
       <div className="flex sm:w-5/6 md:w-5/6 w-11/12 max-w-5xl bg-white rounded-xl shadow-lg flex-col md:flex-row">
         
@@ -77,8 +78,7 @@ const Landing = () => {
             className="object-cover w-full h-full"
           />
         </div>
-
-
+        
         
         {/* Form Section */}
         <div className="w-full lg:w-1/2 p-8 lg:p-12 bg-gray-100 rounded-b-xl md:rounded-r-xl">
@@ -139,6 +139,7 @@ const Landing = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

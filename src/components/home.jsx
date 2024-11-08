@@ -12,7 +12,8 @@ const Homepage = () => {
 
   return (
     <>
-      <section className="home mt-[3rem] lg:mt-0 flex flex-col-reverse lg:flex-row items-center min-h-[50vh] bg-black py-[1rem] lg:py-0 text-white px-6 md:px-12 lg:px-0 xl:px-14">
+    <div className='home'></div>
+      <section className=" mt-[3rem] lg:mt-0 flex flex-col-reverse lg:flex-row items-center min-h-[50vh] bg-black py-[0.2rem] lg:py-0 text-white px-6 md:px-12 lg:px-0 xl:px-14">
         <div className="flex flex-col items-start w-full lg:w-1/2 lg:pl-[9rem]">
           <h3 className="text-yellow-500 text-sm md:text-base lg:text-lg uppercase tracking-widest">Hello!!</h3>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mt-2">
@@ -39,7 +40,7 @@ const Homepage = () => {
             </a>
             <a
               href="#my-works"
-              className="border border-gray-300 text-gray-300 font-semibold py-2 px-6 rounded-full hover:border-sky-400 hover:text-white transform transition duration-600"
+              className="border text-center border-gray-300 text-gray-300 font-semibold py-2 px-6 rounded-full hover:border-sky-400 hover:text-white transform transition duration-600"
             >
               My Works
             </a>

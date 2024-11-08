@@ -10,6 +10,7 @@ import Mygithub from './components/GithubRepo/github'
 import SkillsSection from './components/Skills/skills'
 import GithubCal from './components/GithubRepo/GitCalender'
 import Landing from "./components/contact/contact"
+import { TimelineDemo } from './components/Timeline/app'
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
     <GithubCal/>
     <SkillsSection/>
     <Landing/>
+    <TimelineDemo/>
     </>
   )
 }

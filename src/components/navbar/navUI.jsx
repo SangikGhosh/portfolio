@@ -67,7 +67,7 @@ export const Menu = ({ setActive, active, children }) => {
 
 export const ProductItem = ({ title, description, href, src }) => {
   return (
-    <Link to={href} className="flex space-x-2">
+    <Link to={href} className="flex space-x-2 ">
       <img
         src={src}
         width={140}
@@ -76,7 +76,7 @@ export const ProductItem = ({ title, description, href, src }) => {
         className="flex-shrink-0 rounded-md shadow-2xl"
       />
       <div>
-        <h4 className="text-xl font-bold mb-1 text-black dark:text-white">
+        <h4 className="text-xl  font-bold mb-1 text-black dark:text-white">
           {title}
         </h4>
         <p className="text-neutral-700 text-sm max-w-[10rem] dark:text-neutral-300">
