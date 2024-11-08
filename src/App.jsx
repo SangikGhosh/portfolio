@@ -11,6 +11,7 @@ import SkillsSection from './components/Skills/skills'
 import GithubCal from './components/GithubRepo/GitCalender'
 import Landing from "./components/contact/contact"
 import { TimelineDemo } from './components/Timeline/app'
+import Footer from './components/Footer/footer'
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
     <SkillsSection/>
     <Landing/>
     <TimelineDemo/>
+    <Footer/>
     </>
   )
 }

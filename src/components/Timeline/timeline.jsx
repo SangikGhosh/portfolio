@@ -28,7 +28,7 @@ export const Timeline = ({ data }) => {
           Changelog from my journey
         </h2>
         <p className="text-neutral-700 dark:text-neutral-300 text-sm md:text-lg">
-          I&apos;ve been working on Aceternity for the past 2 years. Here&apos;s a timeline of my journey.
+          I've been immersed in the field of Computer Science and Technology for the past two years, building knowladge and honing my skills. Here&apos;s a timeline of my journey.
         </p>
       </div>
       <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
