@@ -27,7 +27,7 @@ const Mygithub = () => {
   }, []);
 
   return (
-    <div className="bg-[#0a0a0a] min-h-screen text-white p-6">
+    <div className="bg-[#000000] min-h-screen text-white p-6">
       <div className="flex items-center mb-6">
         <img
           src={profile.avatar_url}
