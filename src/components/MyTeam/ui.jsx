@@ -71,7 +71,7 @@ export const AnimatedTestimonials = ({
       onMouseUp={handleMouseUp}
       onMouseLeave={() => setIsDragging(false)}
     >
-      <div className="ourTeam">
+      <div className="ourTeam">2
         <TextHoverEffect text="OUR TEAM" id="team" />
       </div>
 
