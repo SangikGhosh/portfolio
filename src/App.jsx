@@ -12,6 +12,7 @@ import GithubCal from './components/GithubRepo/GitCalender'
 import Landing from "./components/contact/contact"
 import { TimelineDemo } from './components/Timeline/app'
 import Footer from './components/Footer/footer'
+import { AnimatedTestimonialsDemo } from './components/MyTeam/app'
 
 function App() {
 
@@ -21,7 +22,8 @@ function App() {
     <Homepage/>
     <AboutMe/>
     <BentoGridDemo/>
-    <Team/>
+    <AnimatedTestimonialsDemo/>
+    {/* <Team/> */}
     <LeetCodeProgress/>
     <LeetcodeCal/>
     <Mygithub/>

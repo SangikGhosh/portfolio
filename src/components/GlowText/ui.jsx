@@ -1,122 +1,129 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 export const TextHoverEffect = ({
   text,
-  size = "3xl", // Default size if not specified
-  duration = 2, // Default duration for animation
-  border = 0.3, // Default stroke width if not specified
+  size,
+  strokeWidth,
+  fontSize = "3xl",
+  duration = 2, // Default duration
   glowColors = {
-    stop1: "var(--yellow-500)",
-    stop2: "var(--red-500)",
-    stop3: "var(--blue-500)",
-    stop4: "var(--cyan-500)",
-    stop5: "var(--violet-500)",
-  },
-  id, // Unique ID for gradient
+    stop1: "var(--cyan-400)",   // Cool and refreshing
+    stop2: "var(--blue-500)",   // Deep and vivid
+    stop3: "var(--indigo-500)", // Transition to a rich tone
+    stop4: "var(--violet-500)", // Mysterious and bold
+    stop5: "var(--pink-500)",   // Bright and playful
+    stop6: "var(--orange-400)", // Warm and energizing
+    stop7: "var(--yellow-400)", // Vibrant and cheerful
+    
+  },  
+  id // New prop for unique ID
 }) => {
   const svgRef = useRef(null);
+  const [hovered, setHovered] = useState(false);
   const [maskPosition, setMaskPosition] = useState({ cx: "50%", cy: "50%" });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (svgRef.current) {
-        const svgRect = svgRef.current.getBoundingClientRect();
-        const cxPercentage = ((e.clientX - svgRect.left) / svgRect.width) * 100;
-        const cyPercentage = ((e.clientY - svgRect.top) / svgRect.height) * 100;
-        
-        requestAnimationFrame(() =>
-          setMaskPosition({
-            cx: `${cxPercentage}%`,
-            cy: `${cyPercentage}%`,
-          })
-        );
-      }
-    };
-
-    svgRef.current.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      svgRef.current.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
 
   return (
     <svg
       ref={svgRef}
       width="100%"
-      height="auto"
+      height="100%"
       viewBox="0 0 300 100"
       xmlns="http://www.w3.org/2000/svg"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onMouseMove={(e) => {
+        if (svgRef.current) {
+          const svgRect = svgRef.current.getBoundingClientRect();
+          const cxPercentage = ((e.clientX - svgRect.left) / svgRect.width) * 100;
+          const cyPercentage = ((e.clientY - svgRect.top) / svgRect.height) * 100;
+          setMaskPosition({
+            cx: `${cxPercentage}%`,
+            cy: `${cyPercentage}%`,
+          });
+        }
+      }}
       className="select-none"
     >
       <defs>
-        {/* Continuous Animated Linear Gradient */}
-        <motion.linearGradient
-          id={`textGradient-${id}`}
+        <linearGradient
+          id={`textGradient-${id}`} // Unique ID for gradient
           gradientUnits="userSpaceOnUse"
-          x1="0%" x2="100%"
-          y1="0%" y2="0%"
-          animate={{
-            x1: ["0%", "100%", "0%"],
-            x2: ["100%", "0%", "100%"],
-          }}
-          transition={{
-            duration: duration,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          cx="50%"
+          cy="50%"
+          r="25%"
         >
-          <stop offset="0%" stopColor={glowColors.stop1} />
-          <stop offset="25%" stopColor={glowColors.stop2} />
-          <stop offset="50%" stopColor={glowColors.stop3} />
-          <stop offset="75%" stopColor={glowColors.stop4} />
-          <stop offset="100%" stopColor={glowColors.stop5} />
-        </motion.linearGradient>
+          {hovered && (
+            <>
+              <stop offset="0%" stopColor={glowColors.stop1} />
+              <stop offset="15%" stopColor={glowColors.stop2} />
+              <stop offset="30%" stopColor={glowColors.stop3} />
+              <stop offset="45%" stopColor={glowColors.stop4} />
+              <stop offset="50%" stopColor={glowColors.stop5} />
+              <stop offset="65%" stopColor={glowColors.stop6} />
+              <stop offset="70%" stopColor={glowColors.stop7} />
+              
+            </>
+          )}
+        </linearGradient>
 
-        {/* Radial Mask with Animated Position */}
         <motion.radialGradient
-          id={`revealMask-${id}`}
+          id={`revealMask-${id}`} // Unique ID for mask
           gradientUnits="userSpaceOnUse"
           r="20%"
-          cx={maskPosition.cx}
-          cy={maskPosition.cy}
+          animate={maskPosition}
           transition={{
-            type: "spring",
-            stiffness: 100,
-            damping: 30,
+            type: "tween",
+            duration: 0.1,
+            ease: "linear",
           }}
         >
           <stop offset="0%" stopColor="white" />
           <stop offset="100%" stopColor="black" />
         </motion.radialGradient>
-        
-        <mask id={`textMask-${id}`}>
+        <mask id={`textMask-${id}`}> {/* Unique ID for mask */}
           <rect x="0" y="0" width="100%" height="100%" fill={`url(#revealMask-${id})`} />
         </mask>
       </defs>
-      
-      {/* Static Text */}
       <text
         x="50%"
         y="50%"
         textAnchor="middle"
         dominantBaseline="middle"
-        strokeWidth={border} // Apply the dynamic border/stroke width
-        className={`font-[helvetica] font-bold lg:stroke-neutral-500 stroke-neutral-300 tracking-tight fill-transparent text-${size}`}
+        strokeWidth={strokeWidth || 0.3}
+        className={`font-[helvetica] font-bold stroke-neutral-100 dark:stroke-neutral-700 fill-transparent text-${fontSize} tracking-tight`}
+        style={{ opacity: hovered ? 1 : 1 }} // Light stroke when not hovered
       >
         {text}
       </text>
-
-      {/* Continuous Glowing Text */}
+      <motion.text
+        x="50%"
+        y="50%"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        strokeWidth="0.3"
+        className={`font-[helvetica] font-bold fill-transparent text-${fontSize} brightness-200 stroke-neutral-100 tracking-tight dark:stroke-neutral-800`}
+        initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
+        animate={{
+          strokeDashoffset: 0,
+          strokeDasharray: 1000,
+        }}
+        transition={{
+          duration: 0.5,
+          ease: "easeInOut",
+        }}
+      >
+        {text}
+      </motion.text>
       <text
         x="50%"
         y="50%"
         textAnchor="middle"
         dominantBaseline="middle"
-        stroke={`url(#textGradient-${id})`} // Animated gradient
-        strokeWidth={border} // Apply the dynamic border/stroke width
-        mask={`url(#textMask-${id})`} // Mask applied
-        className={`font-[helvetica] font-bold tracking-tight text-${size}`}
+        stroke={`url(#textGradient-${id})`} // Use unique ID for gradient
+        strokeWidth="0.3"
+        mask={`url(#textMask-${id})`} // Use unique ID for mask
+        className={`font-[helvetica] font-bold tracking-tight fill-transparent text-${fontSize}`}
       >
         {text}
       </text>

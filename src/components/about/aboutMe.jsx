@@ -68,7 +68,7 @@ const AboutMe = () => {
 
           {/* Info Section */}
           <div className="space-y-6 text-left pl-2 sm:pl-16 w-full md:w-auto md:text-left">
-            <TextHoverEffect className="left-0" text="About Me" size="4xl" border={0.8} />
+            <TextHoverEffect className="left-0" text="About Me" fontSize="4xl" strokeWidth={1} />
 
             <p className="text-gray-400 text-sm sm:text-base md:text-lg lg:text-[1.15rem] max-w-md">
               I am a dedicated software developer with expertise in Java, Android app development, and modern web technologies.
