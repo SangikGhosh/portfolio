@@ -71,7 +71,9 @@ export const AnimatedTestimonials = ({
       onMouseUp={handleMouseUp}
       onMouseLeave={() => setIsDragging(false)}
     >
-      <TextHoverEffect text="OUR TEAM" id="team" />
+      <div className="ourTeam">
+        <TextHoverEffect text="OUR TEAM" id="team" />
+      </div>
 
       <div className="max-w-sm md:max-w-4xl mx-auto antialiased font-sans px-4 md:px-8 lg:px-12 py-0">
         <div className="relative grid grid-cols-1 md:grid-cols-2 gap-20">
