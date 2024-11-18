@@ -1,8 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Homepage from './components/home'
 import { NavbarDemo } from './components/navbar/navbar'
 import { BentoGridDemo } from './components/projects/app'
-import Team from './components/ourTeam/team'
 import AboutMe from './components/about/aboutMe'
 import LeetCodeProgress from "./components/Leetcode/leetcode"
 import LeetcodeCal from './components/Leetcode/calender'
@@ -13,25 +12,34 @@ import Landing from "./components/contact/contact"
 import { TimelineDemo } from './components/Timeline/app'
 import Footer from './components/Footer/footer'
 import { AnimatedTestimonialsDemo } from './components/MyTeam/app'
+import Preloader from "./components/preloader/App"
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
-    <NavbarDemo/>
-    <Homepage/>
-    <AboutMe/>
-    <BentoGridDemo/>
-    <AnimatedTestimonialsDemo/>
-    {/* <Team/> */}
-    <LeetCodeProgress/>
-    <LeetcodeCal/>
-    <Mygithub/>
-    <GithubCal/>
-    <SkillsSection/>
-    <Landing/>
-    <TimelineDemo/>
-    <Footer/>
+    {isLoading ? <Preloader /> : 
+    <div>
+      <NavbarDemo/>
+      <Homepage/>
+      <AboutMe/>
+      <BentoGridDemo/>
+      <AnimatedTestimonialsDemo/>
+      <LeetCodeProgress/>
+      <LeetcodeCal/>
+      <Mygithub/>
+      <GithubCal/>
+      <SkillsSection/>
+      <Landing/>
+      <TimelineDemo/>
+      <Footer/>
+    </div>}
     </>
   )
 }

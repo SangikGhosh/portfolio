@@ -69,7 +69,7 @@ export const FollowPointer = ({
   ];
   return (
     (<motion.div
-      className="h-4 w-4 rounded-full bg-transparent absolute z-50"
+      className="h-4 w-4 rounded-full bg-transparent absolute z-20"
       style={{
         top: y,
         left: x,

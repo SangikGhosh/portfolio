@@ -71,12 +71,12 @@ export const AnimatedTestimonials = ({
       onMouseUp={handleMouseUp}
       onMouseLeave={() => setIsDragging(false)}
     >
-      <div className="ourTeam">2
+      <div className="ourTeam">
         <TextHoverEffect text="OUR TEAM" id="team" />
       </div>
 
-      <div className="max-w-sm md:max-w-4xl mx-auto antialiased font-sans px-4 md:px-8 lg:px-12 py-0">
-        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-20">
+      <div className="max-w-sm md:max-w-4xl mx-auto antialiased font-sans px-6 md:px-10 lg:px-12 py-0">
+        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-10 md:gap-0">
           <div>
             <div className="relative h-80 w-full">
               <AnimatePresence>
@@ -111,7 +111,7 @@ export const AnimatedTestimonials = ({
                       width={500}
                       height={500}
                       draggable={false}
-                      className="h-full w-full rounded-3xl object-cover object-center"
+                      className="h-[350px] w-[300px] rounded-3xl object-cover object-center"
                       loading="lazy" // Lazy-load images
                     />
                   </motion.div>
@@ -139,10 +139,10 @@ export const AnimatedTestimonials = ({
                 ease: "easeInOut",
               }}
             >
-              <h3 className="text-2xl font-bold dark:text-white text-black">
+              <h3 className="text-4xl font-bold dark:text-white text-black">
                 {testimonials[active].name}
               </h3>
-              <p className="text-sm text-gray-500 dark:text-neutral-500">
+              <p className="text-base text-gray-500 dark:text-neutral-500">
                 {testimonials[active].designation}
               </p>
               <motion.p className="text-lg text-gray-500 mt-8 dark:text-neutral-300">
@@ -171,13 +171,13 @@ export const AnimatedTestimonials = ({
                 ))}
               </motion.p>
             </motion.div>
-            <div className="flex gap-4 pt-12 md:pt-0">
+            <div className="sm:flex gap-4 hidden pt-12 md:pt-0">
               <button
                 onClick={handlePrev}
                 className="h-7 w-7 rounded-full bg-gray-100 dark:bg-neutral-800 flex items-center justify-center group/button"
               >
                 <IconArrowLeft
-                  className="h-5 w-5 text-black dark:text-neutral-400 group-hover/button:rotate-12 transition-transform duration-300"
+                  className="h-5 w-5 text-black bg-transparent dark:text-neutral-400 group-hover/button:rotate-12 transition-transform duration-300"
                 />
               </button>
               <button
@@ -185,7 +185,7 @@ export const AnimatedTestimonials = ({
                 className="h-7 w-7 rounded-full bg-gray-100 dark:bg-neutral-800 flex items-center justify-center group/button"
               >
                 <IconArrowRight
-                  className="h-5 w-5 text-black dark:text-neutral-400 group-hover/button:-rotate-12 transition-transform duration-300"
+                  className="h-5 w-5 text-black bg-transparent dark:text-neutral-400 group-hover/button:-rotate-12 transition-transform duration-300"
                 />
               </button>
             </div>
