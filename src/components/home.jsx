@@ -33,7 +33,7 @@ const Homepage = () => {
 
       {/* Content */}
       <div className="home"></div>
-      <section className="flex flex-col-reverse lg:flex-row items-center min-h-screen bg-black bg-opacity-50 text-white px-6 md:px-12 lg:px-0 xl:px-14">
+      <section className="flex flex-col-reverse lg:flex-row items-center bg-black bg-opacity-50 pt-6 text-white px-6 md:px-12 lg:px-0 xl:px-14">
         <div className="flex flex-col items-start w-full lg:w-1/2 lg:pl-[9rem] z-[2] bg-transparent">
           <h3 className="text-yellow-500 text-sm md:text-base lg:text-lg uppercase tracking-widest bg-transparent">Hello!!</h3>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mt-2 bg-transparent">
@@ -50,7 +50,7 @@ const Homepage = () => {
           <p className="text-gray-300 mt-4 text-sm sm:text-base md:text-lg lg:text-xl bg-transparent">
             Creating powerful, seamless solutions across mobile, web, and backend with a drive for excellence.
           </p>
-          <div className="mt-6 flex flex-col sm:flex-row gap-4">
+          <div className="mt-6 flex flex-col sm:flex-row gap-4 bg-transparent">
             <a
               href="#contact"
               onClick={scrollToContact}

@@ -66,7 +66,7 @@ function Navbar({ className }) {
             className="text-white text-xl absolute top-4 right-4"
             onClick={() => setIsDrawerOpen(false)}
           >
-            <IoCloseSharp className="text-4xl"/>
+            <IoCloseSharp className="text-4xl text-[#ff1818]"/>
           </button>
         
           <div className="flex flex-col space-y-4">
@@ -246,5 +246,3 @@ function Navbar({ className }) {
     </div>
   );
 }
-
-
