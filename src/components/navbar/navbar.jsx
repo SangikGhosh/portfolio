@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { Menu, MenuItem } from "./navUI"; 
+import React, { useState, useEffect } from "react";
+import { Menu, MenuItem } from "./navUI";
 import { cn } from "../../lib/utils";
-import { IoHome, IoCloseSharp, IoMenu, IoSettings } from "react-icons/io5";
+import { IoHome, IoCloseSharp, IoMenu } from "react-icons/io5";
 import { TbReportAnalytics } from "react-icons/tb";
 import { FaAccusoft } from "react-icons/fa";
 import { TfiAnnouncement } from "react-icons/tfi";
 import { GrAchievement } from "react-icons/gr";
 import { GiJourney } from "react-icons/gi";
-import { Link } from "react-scroll";  // Import from react-scroll for smooth scrolling
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import img from "../../assets/sg1.png"
+import { Link } from "react-scroll"; // Import from react-scroll for smooth scrolling
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import img from "../../assets/sg1.png";
 import { MdGroups } from "react-icons/md";
 import { ImEmbed2 } from "react-icons/im";
 
@@ -26,10 +26,28 @@ function Navbar({ className }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [active, setActive] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
   const getActiveClass = (path) =>
     location.pathname === path
       ? "text-blue-500 font-bold"
       : "text-white";
+
+  useEffect(() => {
+    let lastScroll = 0;
+
+    const handleScroll = () => {
+      const currentScroll = window.scrollY;
+      if (currentScroll > lastScroll && currentScroll > 50) {
+        setShowNavbar(false); // Hide navbar on scroll down
+      } else {
+        setShowNavbar(true); // Show navbar on scroll up
+      }
+      lastScroll = currentScroll;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
     
     <div className={cn("fixed inset-x-0 max-w-full mx-auto z-50", className)}>
