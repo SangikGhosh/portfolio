@@ -54,6 +54,7 @@ const AboutMe = () => {
     <>
       <div
         ref={sectionRef}
+        id="aboutMe"
         className="aboutMe flex items-center justify-center bg-black text-white px-4 md:px-6 lg:px-8 xl:px-0 min-h-screen"
       >
         <div className="flex flex-col md:flex-row items-center gap-4 lg:gap-8 max-w-5xl w-full md:justify-center lg:justify-between lg:items-center">
@@ -102,7 +103,7 @@ const AboutMe = () => {
               </p>
               <div className="pt-4">
                 <a href="https://drive.google.com/uc?export=download&id=1-DcPqiG4X37oJsQl0yPLl1MY-vSDv3sv">
-                <button className="bg-gradient-to-r from-blue-500 to-purple-500 text-black font-semibold py-2 px-6 rounded-full transition duration-300 hover:brightness-[0.8] text-sm sm:text-base lg:text-lg">
+                <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-black font-semibold py-2 px-6 rounded-full transition duration-300 hover:brightness-[0.8] text-sm sm:text-base lg:text-lg">
                   DOWNLOAD CV
                 </button>
                 </a>

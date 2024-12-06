@@ -13,6 +13,7 @@ import { TimelineDemo } from './components/Timeline/app'
 import Footer from './components/Footer/footer'
 import { AnimatedTestimonialsDemo } from './components/MyTeam/app'
 import Preloader from "./components/preloader/App"
+import AnimatedModalDemo from "./components/viewProject/App"
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
