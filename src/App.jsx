@@ -37,8 +37,8 @@ function App() {
       <Mygithub/>
       <GithubCal/>
       <SkillsSection/>
-      <Landing/>
       <TimelineDemo/>
+      <Landing/>
       <Footer/>
     </div>}
     </>

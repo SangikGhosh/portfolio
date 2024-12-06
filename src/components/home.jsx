@@ -60,8 +60,15 @@ const Homepage = () => {
               SAY HELLO👋
             </a>
             <a
-              href="#my-works"
+              href="#projects"
               className="border text-center border-gray-300 text-gray-300 font-semibold py-2 px-6 rounded-full hover:border-sky-400 hover:text-white transform transition duration-600"
+              onClick={(e) => {
+                e.preventDefault();
+                const target = document.querySelector('#projects');
+                if (target) {
+                  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
             >
               My Works
             </a>
