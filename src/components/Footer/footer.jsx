@@ -13,13 +13,13 @@ const Footer = () => {
             Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.
           </p>
           <div className="flex space-x-3">
-            <a href="#" className="p-2 bg-gray-700 rounded-full">
+            <a href="https://x.com/Sangik_Ghosh" target='_blank' className="p-2 bg-gray-700 rounded-full">
               <FaTwitter className='bg-gray-700'/>
             </a>
-            <a href="#" className="p-2 bg-gray-700 rounded-full">
+            <a href="https://www.facebook.com/profile.php?id=100088473806630" target='_blank' className="p-2 bg-gray-700 rounded-full">
               <FaFacebookF className='bg-gray-700'/>
             </a>
-            <a href="#" className="p-2 bg-gray-700 rounded-full">
+            <a href="https://www.instagram.com/s.a.n.g.i.k_/" target='_blank' className="p-2 bg-gray-700 rounded-full">
               <FaInstagram className='bg-gray-700'/>
             </a>
           </div>
