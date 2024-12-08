@@ -31,8 +31,15 @@ const Footer = () => {
           <ul className="space-y-2">
             <li>
               <a 
-                href="#" 
-                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0">
+                href="#home" 
+                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0"
+                  onClick={(e) => {
+                  e.preventDefault(); // Prevent default anchor behavior
+                  document.querySelector('#home')?.scrollIntoView({ 
+                    behavior: 'smooth' // Enable smooth scroll 
+                  });
+                }}
+                >
                 <span className="block pl-0 group-hover:pl-2 transition-all duration-200">
                   Home
                 </span>
@@ -40,8 +47,15 @@ const Footer = () => {
             </li>
             <li>
               <a 
-                href="#" 
-                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0">
+                href="#aboutMe" 
+                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0"
+                  onClick={(e) => {
+                  e.preventDefault(); // Prevent default anchor behavior
+                  document.querySelector('#aboutMe')?.scrollIntoView({ 
+                    behavior: 'smooth' // Enable smooth scroll 
+                  });
+                }}
+                >
                 <span className="block pl-0 group-hover:pl-2 transition-all duration-200">
                   About
                 </span>
@@ -49,17 +63,15 @@ const Footer = () => {
             </li>
             <li>
               <a 
-                href="#" 
-                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0">
-                <span className="block pl-0 group-hover:pl-2 transition-all duration-200">
-                  Services
-                </span>
-              </a>
-            </li>
-            <li>
-              <a 
-                href="#" 
-                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0">
+                href="#projects" 
+                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0"
+                                  onClick={(e) => {
+                  e.preventDefault(); // Prevent default anchor behavior
+                  document.querySelector('#projects')?.scrollIntoView({ 
+                    behavior: 'smooth' // Enable smooth scroll 
+                  });
+                }}
+                >
                 <span className="block pl-0 group-hover:pl-2 transition-all duration-200">
                   Projects
                 </span>
@@ -67,8 +79,31 @@ const Footer = () => {
             </li>
             <li>
               <a 
-                href="#" 
-                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0">
+                href="#achievements" 
+                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0"
+                  onClick={(e) => {
+                  e.preventDefault(); // Prevent default anchor behavior
+                  document.querySelector('#achievements')?.scrollIntoView({ 
+                    behavior: 'smooth' // Enable smooth scroll 
+                  });
+                }}
+                >
+                <span className="block pl-0 group-hover:pl-2 transition-all duration-200">
+                Achievements
+                </span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#contact"
+                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0"
+                onClick={(e) => {
+                  e.preventDefault(); // Prevent default anchor behavior
+                  document.querySelector('#contact')?.scrollIntoView({ 
+                    behavior: 'smooth' // Enable smooth scroll 
+                  });
+                }}
+              >
                 <span className="block pl-0 group-hover:pl-2 transition-all duration-200">
                   Contact
                 </span>
@@ -115,13 +150,13 @@ const Footer = () => {
           <h3 className="font-bold text-2xl text-blue-700 mb-3">Have a Questions?</h3>
           <ul className="space-y-2 text-gray-400">
             <li className="flex items-center">
-              <span className="mr-2">📍</span> 203 Fake St. Mountain View, San Francisco, California, USA
+              <span className="mr-2">📍</span> 17/K/25 Ultadanda, North 24 Parganas, West Bengal, India 
             </li>
             <li className="flex items-center">
-              <span className="mr-2">📞</span> +2 392 3929 210
+              <span className="mr-2">📞</span> +91 62958 94643
             </li>
             <li className="flex items-center">
-              <span className="mr-2">📧</span> info@yourdomain.com
+              <span className="mr-2">📧</span> sangik.ghosh1@gmail.com
             </li>
           </ul>
         </div>

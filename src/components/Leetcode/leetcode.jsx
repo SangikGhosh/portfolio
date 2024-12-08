@@ -24,7 +24,7 @@ const LeetCodeProgress = () => {
         setLoading(false);
       })
       .catch((error) => {
-        setError("Failed to fetch data");
+        setError("Failed to fetch data", error);
         setLoading(false);
       });
 
@@ -44,113 +44,103 @@ const LeetCodeProgress = () => {
 
   return (
     <>
-      <div className="achievements dark:bg-[#000000] min-h-screen flex flex-col items-center justify-center py-10 bg-[#000000]">
-        <TextHoverEffect text="ACHIEVEMENTS" id="achievements" />
-        <div className="container mx-auto p-8 bg-[#1a1a1a] rounded-xl shadow-xl max-w-6xl lg:px-12 xl:max-w-7xl">
-          {/* Profile Section */}
-          <div className="flex flex-col items-center md:flex-row md:items-center mb-12 bg-[#1a1a1a]">
-            <img
-              src="https://avatars.githubusercontent.com/u/136787875?s=400&u=0c804c413ccf10b164faed21260d9771f2aa30df&v=4"
-              alt="Profile"
-              className="w-20 h-20 md:w-24 md:h-24 lg:w-27 lg:h-27 rounded-full border-[0.3rem] border-green-500 shadow-lg"
-            />
-            <div className="mt-6 md:mt-0 md:ml-8 lg:ml-10 text-center bg-[#1a1a1a] md:text-left">
-              <h1 className="text-2xl md:text-3xl lg:text-4xl tracking-wide font-bold bg-[#1a1a1a] text-gray-900 dark:text-white">
-                Sangik Ghosh
-              </h1>
-              <p className="text-base md:text-xl lg:text-xl bg-[#1a1a1a] text-gray-500 dark:text-gray-400 mt-3">
-                Tech Enthusiast🌀
-              </p>
-            </div>
+    
+<div id="achievements" className="achievements dark:bg-[#000000] min-h-screen flex flex-col items-center justify-center py-10 bg-[#000000]">
+<TextHoverEffect text="ACHIEVEMENTS" id="achievements" className="achievements"/>
+  <div className="container mx-auto p-8 bg-[#1a1a1a] rounded-xl shadow-xl max-w-6xl lg:px-12 xl:max-w-7xl">
+    {/* Profile Section */}
+    <div className="flex flex-col items-center md:flex-row md:items-center mb-12 bg-[#1a1a1a]">
+      <img
+        src="https://avatars.githubusercontent.com/u/136787875?s=400&u=0c804c413ccf10b164faed21260d9771f2aa30df&v=4"
+        alt="Profile"
+        className="w-20 h-20 md:w-24 md:h-24 lg:w-27 lg:h-27 rounded-full border-[0.3rem] border-green-500 shadow-lg"
+      />
+      <div className="mt-6 md:mt-0 md:ml-8 lg:ml-10 text-center bg-[#1a1a1a] md:text-left">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl tracking-wide font-bold bg-[#1a1a1a] text-gray-900 dark:text-white">
+          Sangik Ghosh
+        </h1>
+        <p className="text-base md:text-xl lg:text-xl bg-[#1a1a1a] text-gray-500 dark:text-gray-400 mt-3">
+          Tech Enthusiast🌀
+        </p>
+      </div>
+    </div>
+
+    {/* LeetCode Progress Section */}
+    <h1 className="text-4xl md:text-3xl lg:text-5xl tracking-wide font-bold text-center bg-[#1a1a1a] mb-12">
+      <span className="text-transparent bg-clip-text bg-[#5154ff]">
+        LeetCode
+      </span>{" "}
+      <span className="dark:text-white bg-[#1a1a1a]">Progress</span>
+    </h1>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 bg-[#1a1a1a] gap-8 lg:gap-10">
+      <ProgressCard
+        title="Total Solved"
+        value={progress.totalSolved}
+        bgColor="from-blue-500 to-blue-700"
+        icon={<FaCheckCircle className="bg-transparent" />}
+      />
+
+      <ProgressCard
+        title="Easy Solved"
+        value={progress.easySolved}
+        bgColor="from-green-500 to-green-700"
+        icon={<FaListAlt className="bg-transparent" />}
+      />
+
+      <ProgressCard
+        title="Medium Solved"
+        value={progress.mediumSolved}
+        bgColor="from-yellow-500 to-yellow-700"
+        icon={<FaChartLine className="bg-transparent" />}
+      />
+
+      <ProgressCard
+        title="Hard Solved"
+        value={progress.hardSolved}
+        bgColor="from-red-500 to-red-700"
+        icon={<FaTrophy className="bg-transparent" />}
+      />
+
+      <ProgressCard
+        title="Contribution Point"
+        value={progress.contributionPoint}
+        bgColor="from-indigo-500 to-indigo-700"
+        icon={<RiCopperCoinFill className="bg-transparent" />}
+      />
+
+      <ProgressCard
+        title="Rank"
+        value={progress.ranking}
+        bgColor="from-purple-500 to-purple-700"
+        icon={<FaMedal className="bg-transparent" />}
+      />
+    </div>
+
+    {/* Badge Showcase Section */}
+    {badgesData?.badges?.length > 0 && (
+      <div className="bg-[#1a1a1a] mt-12">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl tracking-wide font-bold text-center text-gray-700 dark:text-white my-12">
+          Badges
+        </h1>
+
+        {/* Earned Badges */}
+        <div>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-700 dark:text-white mb-6">
+            Earned Badges
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            {badgesData.badges.map((badge, index) => (
+              <BadgeCard key={index} badge={badge} />
+            ))}
           </div>
-
-          {/* LeetCode Progress Section */}
-          <h1 className="text-4xl md:text-3xl lg:text-5xl tracking-wide font-bold text-center bg-[#1a1a1a] mb-12">
-            <span className="text-transparent bg-clip-text bg-[#5154ff]">
-              LeetCode
-            </span>{" "}
-            <span className="dark:text-white bg-[#1a1a1a]">Progress</span>
-          </h1>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 bg-[#1a1a1a] gap-8 lg:gap-10 group">
-            {progressCards(progress)}
-          </div>
-
-          {/* Badge Showcase Section */}
-          {badgesData?.badges?.length > 0 && (
-            <div className="bg-[#1a1a1a] mt-12">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl tracking-wide font-bold text-center text-gray-700 dark:text-white my-12">
-                Badges
-              </h1>
-
-              {/* Earned Badges */}
-              <div>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-700 dark:text-white mb-6">
-                  Earned Badges
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-                  {badgesData.badges.map((badge, index) => (
-                    <BadgeCard key={index} badge={badge} />
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
-    </>
+    )}
+  </div>
+</div>
+</>
   );
-};
-
-const progressCards = (progress) => {
-  const cards = [
-    {
-      title: "Total Solved",
-      value: progress.totalSolved,
-      bgColor: "from-blue-500 to-blue-700",
-      icon: <FaCheckCircle className="bg-transparent" />,
-    },
-    {
-      title: "Easy Solved",
-      value: progress.easySolved,
-      bgColor: "from-green-500 to-green-700",
-      icon: <FaListAlt className="bg-transparent" />,
-    },
-    {
-      title: "Medium Solved",
-      value: progress.mediumSolved,
-      bgColor: "from-yellow-500 to-yellow-700",
-      icon: <FaChartLine className="bg-transparent" />,
-    },
-    {
-      title: "Hard Solved",
-      value: progress.hardSolved,
-      bgColor: "from-red-500 to-red-700",
-      icon: <FaTrophy className="bg-transparent" />,
-    },
-    {
-      title: "Contribution Point",
-      value: progress.contributionPoint,
-      bgColor: "from-indigo-500 to-indigo-700",
-      icon: <RiCopperCoinFill className="bg-transparent" />,
-    },
-    {
-      title: "Rank",
-      value: progress.ranking,
-      bgColor: "from-purple-500 to-purple-700",
-      icon: <FaMedal className="bg-transparent" />,
-    },
-  ];
-
-  return cards.map((card, index) => (
-    <ProgressCard
-      key={index}
-      title={card.title}
-      value={card.value}
-      bgColor={card.bgColor}
-      icon={card.icon}
-    />
-  ));
 };
 
 const ProgressCard = ({ title, value, bgColor, icon }) => {
@@ -200,9 +190,9 @@ const ProgressCard = ({ title, value, bgColor, icon }) => {
   return (
     <div
       ref={cardRef}
-      className={`group-hover:blur-sm  hover:!blur-none p-6 bg-[#1a1a1a] rounded-lg shadow-lg bg-gradient-to-r ${bgColor} text-white transform hover:scale-105 transition-transform duration-500 ease-in-out`}
+      className={`p-6 bg-[#1a1a1a] rounded-lg shadow-lg bg-gradient-to-r ${bgColor} text-white transform hover:scale-105 transition-transform duration-300 ease-in-out`}
     >
-      <div className="flex bg-transparent items-center mb-4">
+      <div className="flex bg-transparent  items-center mb-4">
         <div className="bg-transparent text-2xl">{icon}</div>
         <h2 className="ml-4 bg-transparent text-lg font-semibold">{title}</h2>
       </div>
