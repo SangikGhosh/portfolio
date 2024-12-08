@@ -9,16 +9,21 @@ import {
   IconSignature,
   IconTableColumn,
 } from "@tabler/icons-react";
-import { div } from "framer-motion/client";
 import { TextHoverEffect } from "../GlowText/ui";
 import img from "../../assets/filehider.png";
-import AnimatedModalDemo from "../viewProject/App";
 import PropTypes from "prop-types";
 import { cn } from "../../lib/utils";
 import { BsArrowUpRight } from "react-icons/bs";
 import Swal from "sweetalert2";
+import Card from "./Card";
+import { useState } from 'react';
+
+
+
 
 export function BentoGridDemo() {
+  const [showMessage, setShowMessage] = useState(false);
+
   return (
     <>
       <div className="projects lg:pt-0 pt-20" id="projects">
@@ -34,32 +39,15 @@ export function BentoGridDemo() {
                     <p>{item.description}</p>
                   </div>
                   <div className="flex justify-center">
-                    <ModalTri
-                      className="mt-3 bg-black dark:bg-white dark:text-black text-white flex justify-center group/modal-btn"
+                    <button
+                      className="mt-3 bg-black dark:bg-white w-[5.5rem] h-8 rounded-md text-xs font-normal dark:text-black text-white flex items-center justify-center group/modal-btn relative overflow-hidden"
                       onClick={() => {
                         if (item.link) {
                           window.open(item.link, "_blank");
                         } else {
-                          Swal.fire({
-                            title: "Oops!",
-                            text: "Link not available at this moment.",
-                            showConfirmButton: true,
-                            confirmButtonText: "Exit",
-                            confirmButtonColor: "#000000",
-                            confirmButtonTextColor: "#000000",
-                            background: "#000000",
-                            width: "500px",
-                            heightAuto: false,
-                            timer: 3000,
-                            customClass: {
-                              popup: "custom-alert",
-                              confirmButton: "custom-button",
-                            },
-                          });
+                          setShowMessage(true);
                         }
                       }}
-                      
-                      
                     >
                       <span className="group-hover/modal-btn:translate-x-40 text-center text-black bg-white transition duration-500">
                         Check Out
@@ -67,7 +55,7 @@ export function BentoGridDemo() {
                       <div className="-translate-x-40 bg-white group-hover/modal-btn:translate-x-0 flex items-center justify-center absolute inset-0 transition duration-500 text-black z-20">
                         <BsArrowUpRight className="bg-white h-4 w-4" />
                       </div>
-                    </ModalTri>
+                    </button>
                   </div>
                 </div>
               }
@@ -77,11 +65,16 @@ export function BentoGridDemo() {
             />
           ))}
         </BentoGrid>
+        {showMessage && (
+          <Card
+            message="This project link is currently unavailable."
+            onClose={() => setShowMessage(false)}
+          />
+        )}
       </div>
     </>
   );
 }
-
 
 
 const Skeleton = ({ image }) => (

@@ -14,6 +14,7 @@ import Footer from './components/Footer/footer'
 import { AnimatedTestimonialsDemo } from './components/MyTeam/app'
 import Preloader from "./components/preloader/App"
 import AnimatedModalDemo from "./components/viewProject/App"
+import Card from './components/projects/Card'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,6 +30,7 @@ function App() {
     <div>
       <NavbarDemo/>
       <Homepage/>
+
       <AboutMe/>
       <BentoGridDemo/>
       <AnimatedTestimonialsDemo/>
