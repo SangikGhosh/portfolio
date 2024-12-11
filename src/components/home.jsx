@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import { motion } from 'framer-motion'; // Import Framer Motion
 import img from "../assets/removebg2.png";
 import PropTypes from 'prop-types';
 import FollowerPointerCard from "../components/custompointer/curser";
 import bgVideo from "../assets/starbg.mp4"; // Add your video file path here
-import { useRef, useEffect } from 'react';
-import { getOpacity } from '@mui/material/styles/createColorScheme';
+
 const Homepage = () => {
-  
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -14,10 +13,41 @@ const Homepage = () => {
       videoRef.current.playbackRate = 0.5;
     }
   }, []);
+
   const scrollToContact = (e) => {
     e.preventDefault();
     document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
   };
+
+  // Variants for animations
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.01,
+      },
+    },
+  };
+
+  const wordVariants = {
+    hidden: { x: 50, opacity: 0, filter: "blur(10px)" },
+    visible: {
+      x: 0,
+      opacity: 1,
+      filter: "blur(0px)",
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
+
+  const splitText = (text, gradientWords = []) => text.split(' ').map((word, index) => (
+    <motion.span
+      key={index}
+      className={`inline-block ${gradientWords.includes(word) ? 'bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600 pb-4' : ''}`}
+      variants={wordVariants}
+    >
+      {word}&nbsp;
+    </motion.span>
+  ));
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
@@ -36,26 +66,54 @@ const Homepage = () => {
       <div id='home' className="home"></div>
       <section className="flex flex-col-reverse lg:flex-row items-center bg-black bg-opacity-50 lg:pt-0 pt-6 text-white px-6 md:px-12 lg:px-0 xl:px-14">
         <div className="flex flex-col items-start w-full lg:w-2/3 lg:pl-[9rem] z-[2] bg-transparent">
-          <h3 className="text-yellow-400 text-sm md:text-base lg:text-lg uppercase tracking-widest bg-transparent">Hello!!</h3>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mt-2 bg-transparent">
-            I'm{' '}
-            <span className="bg-clip-text bg-no-repeat text-transparent bg-gradient-to-r py-4 from-blue-600 via-violet-500 to-pink-500">
-              Sangik Ghosh
-            </span>
-          </h1>
-          <p className="text-gray-300 mt-4 text-sm sm:text-base md:text-lg lg:text-xl bg-transparent">
-            I'm a dedicated software developer with expertise in backend systems using Java, Android app development, and
-            the latest in web technologies. I’m passionate about crafting efficient, innovative solutions that address
-            real-world challenges.
-          </p>
-          <p className="text-gray-300 mt-4 text-sm sm:text-base md:text-lg lg:text-xl bg-transparent">
-            Creating powerful, seamless solutions across mobile, web, and backend with a drive for excellence.
-          </p>
+          <motion.h3
+            className="text-yellow-400 text-sm md:text-base lg:text-lg uppercase tracking-widest bg-transparent"
+            variants={wordVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false }}
+          >
+            Hello!!
+          </motion.h3>
+          <motion.h1
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mt-2 bg-transparent"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false }}
+          >
+            I'm
+            <motion.span
+              className="inline-block bg-clip-text bg-no-repeat text-transparent bg-gradient-to-r py-4 from-blue-600 via-violet-600 to-pink-600"
+              variants={wordVariants}
+            >
+              &nbsp;Sangik&nbsp;Ghosh
+            </motion.span>
+          </motion.h1>
+
+          <motion.p
+            className="text-gray-300 mt-4 text-sm sm:text-base md:text-lg lg:text-xl bg-transparent"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false }}
+          >
+            {splitText("I'm a dedicated software developer with expertise in backend systems using Java, Android app development, and the latest in web technologies. I’m passionate about crafting efficient, innovative solutions that address real-world challenges.")}
+          </motion.p>
+          <motion.p
+            className="text-gray-300 mt-4 text-sm sm:text-base md:text-lg lg:text-xl bg-transparent"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false }}
+          >
+            {splitText("Creating powerful, seamless solutions across mobile, web, and backend with a drive for excellence.")}
+          </motion.p>
           <div className="mt-6 flex flex-col sm:flex-row gap-4 bg-transparent">
             <a
               href="#contact"
               onClick={scrollToContact}
-              className="bg-gradient-to-r tracking-widest from-blue-500 to-purple-600 text-black font-semibold py-2 px-6 rounded-full transform transition duration-300 hover:brightness-110"
+              className="bg-gradient-to-r tracking-tight from-blue-600 to-purple-600 text-black font-semibold py-2 px-6 rounded-full transform transition duration-300 hover:brightness-110"
             >
               SAY HELLO👋
             </a>
