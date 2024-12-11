@@ -1,12 +1,32 @@
-import React, { useRef, useEffect } from 'react';
-import { motion } from 'framer-motion'; // Import Framer Motion
+import React, { useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import Lenis from "@studio-freight/lenis"; // Import Lenis
 import img from "../assets/removebg2.png";
-import PropTypes from 'prop-types';
 import FollowerPointerCard from "../components/custompointer/curser";
-import bgVideo from "../assets/starbg.mp4"; // Add your video file path here
+
 
 const Homepage = () => {
   const videoRef = useRef(null);
+
+  useEffect(() => {
+    // Initialize Lenis for smooth scrolling
+    const lenis = new Lenis({
+      duration: 2, // Duration of the smooth scroll effect
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Custom easing
+      smooth: true,
+    });
+
+    const scrollFn = (time) => {
+      lenis.raf(time);
+      requestAnimationFrame(scrollFn);
+    };
+
+    requestAnimationFrame(scrollFn);
+
+    return () => {
+      lenis.destroy(); // Cleanup Lenis on component unmount
+    };
+  }, []);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -19,52 +39,45 @@ const Homepage = () => {
     document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
   };
 
-  // Variants for animations
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
   const containerVariants = {
     hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.01,
-      },
-    },
+    visible: prefersReducedMotion
+      ? {}
+      : {
+          transition: {
+            staggerChildren: 0.05,
+          },
+        },
   };
 
   const wordVariants = {
-    hidden: { x: 50, opacity: 0, filter: "blur(10px)" },
-    visible: {
-      x: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-      transition: { duration: 0.8, ease: "easeOut" },
-    },
+    hidden: { x: prefersReducedMotion ? 0 : 50, opacity: 0, filter: "blur(10px)" },
+    visible: prefersReducedMotion
+      ? { opacity: 1, x: 0, filter: "blur(0px)", transition: { duration: 0.3 } }
+      : { x: 0, opacity: 1, filter: "blur(0px)", transition: { duration: 0.5, ease: "easeOut" } },
   };
 
-  const splitText = (text, gradientWords = []) => text.split(' ').map((word, index) => (
-    <motion.span
-      key={index}
-      className={`inline-block ${gradientWords.includes(word) ? 'bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600 pb-4' : ''}`}
-      variants={wordVariants}
-    >
-      {word}&nbsp;
-    </motion.span>
-  ));
+  const animatedParagraph = (text) =>
+    text.split(" ").map((word, index) => (
+      <motion.p
+        key={index}
+        className="inline-block bg-transparent text-gray-300"
+        variants={wordVariants}
+      >
+        {word}&nbsp;
+      </motion.p>
+    ));
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-      {/* Background Video */}
-      <video
-        ref={videoRef}
-        className="absolute top-0 left-0 w-full h-full opacity-50 object-cover z-[0]"
-        src={bgVideo}
-        autoPlay
-        muted
-        loop
-        playsInline
-      ></video>
-
+    <div className="relative bg-transparent w-full h-screen overflow-hidden">
+    
       {/* Content */}
-      <div id='home' className="home"></div>
-      <section className="flex flex-col-reverse lg:flex-row items-center bg-black bg-opacity-50 lg:pt-0 pt-6 text-white px-6 md:px-12 lg:px-0 xl:px-14">
+      <div id="home" className="home"></div>
+      <section className="flex bg-transparent flex-col-reverse lg:flex-row items-center bg-black bg-opacity-50 lg:pt-0 pt-6 text-white px-6 md:px-12 lg:px-0 xl:px-14">
         <div className="flex flex-col items-start w-full lg:w-2/3 lg:pl-[9rem] z-[2] bg-transparent">
           <motion.h3
             className="text-yellow-400 text-sm md:text-base lg:text-lg uppercase tracking-widest bg-transparent"
@@ -84,13 +97,12 @@ const Homepage = () => {
           >
             I'm
             <motion.span
-              className="inline-block bg-clip-text bg-no-repeat text-transparent bg-gradient-to-r py-4 from-blue-600 via-violet-600 to-pink-600"
+              className="inline-block bg-clip-text bg-no-repeat text-transparent bg-gradient-to-r sm:py-3 from-blue-600 via-violet-600 to-pink-600"
               variants={wordVariants}
             >
               &nbsp;Sangik&nbsp;Ghosh
             </motion.span>
           </motion.h1>
-
           <motion.p
             className="text-gray-300 mt-4 text-sm sm:text-base md:text-lg lg:text-xl bg-transparent"
             variants={containerVariants}
@@ -98,7 +110,9 @@ const Homepage = () => {
             whileInView="visible"
             viewport={{ once: false }}
           >
-            {splitText("I'm a dedicated software developer with expertise in backend systems using Java, Android app development, and the latest in web technologies. I’m passionate about crafting efficient, innovative solutions that address real-world challenges.")}
+            {animatedParagraph(
+              "I'm a dedicated software developer with expertise in backend systems using Java, Android app development, and the latest in web technologies. I’m passionate about crafting efficient, innovative solutions that address real-world challenges."
+            )}
           </motion.p>
           <motion.p
             className="text-gray-300 mt-4 text-sm sm:text-base md:text-lg lg:text-xl bg-transparent"
@@ -107,7 +121,9 @@ const Homepage = () => {
             whileInView="visible"
             viewport={{ once: false }}
           >
-            {splitText("Creating powerful, seamless solutions across mobile, web, and backend with a drive for excellence.")}
+            {animatedParagraph(
+              "Creating powerful, seamless solutions across mobile, web, and backend with a drive for excellence."
+            )}
           </motion.p>
           <div className="mt-6 flex flex-col sm:flex-row gap-4 bg-transparent">
             <a
@@ -120,13 +136,6 @@ const Homepage = () => {
             <a
               href="#projects"
               className="border text-center border-gray-300 text-gray-300 font-semibold py-2 px-6 rounded-full hover:border-sky-400 hover:text-white transform transition duration-600"
-              onClick={(e) => {
-                e.preventDefault();
-                const target = document.querySelector('#projects');
-                if (target) {
-                  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-              }}
             >
               My Works
             </a>
