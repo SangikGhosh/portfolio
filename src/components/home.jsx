@@ -84,7 +84,7 @@ const Homepage = () => {
             variants={wordVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false }}
+            viewport={{ once: true }}
           >
             Hello!!
           </motion.h3>
@@ -93,7 +93,7 @@ const Homepage = () => {
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false }}
+            viewport={{ once: true }}
           >
             I'm
             <motion.span
@@ -108,7 +108,7 @@ const Homepage = () => {
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false }}
+            viewport={{ once: true }}
           >
             {animatedParagraph(
               "I'm a dedicated software developer with expertise in backend systems using Java, Android app development, and the latest in web technologies. I’m passionate about crafting efficient, innovative solutions that address real-world challenges."
@@ -119,7 +119,7 @@ const Homepage = () => {
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false }}
+            viewport={{ once: true }}
           >
             {animatedParagraph(
               "Creating powerful, seamless solutions across mobile, web, and backend with a drive for excellence."
