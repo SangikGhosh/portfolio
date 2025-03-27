@@ -102,9 +102,9 @@ const AboutMe = () => {
                 <span className="font-bold text-yellow-500">{projectCount}</span> Project complete
               </p>
               <div className="pt-4">
-                <a href="https://drive.google.com/uc?export=download&id=1-DcPqiG4X37oJsQl0yPLl1MY-vSDv3sv">
+                <a href="https://www.canva.com/design/DAGb6Dz0bSE/qcV2wlUYbogTpQSqTI0aQg/view?utm_content=DAGb6Dz0bSE&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h1a00f338ba" target="_blank" rel="noreferrer">
                 <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-black font-semibold py-2 px-6 rounded-full transition duration-300 hover:brightness-[0.8] text-sm sm:text-base lg:text-lg">
-                  DOWNLOAD CV
+                  View Resume
                 </button>
                 </a>
               </div>
