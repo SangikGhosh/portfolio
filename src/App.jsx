@@ -1,50 +1,40 @@
-import { useState, useEffect } from 'react'
-import Homepage from './components/home'
-import { NavbarDemo } from './components/navbar/navbar'
-import { BentoGridDemo } from './components/projects/app'
-import AboutMe from './components/about/aboutMe'
-import LeetCodeProgress from "./components/Leetcode/leetcode"
-import LeetcodeCal from './components/Leetcode/calender'
-import Mygithub from './components/GithubRepo/github'
-import SkillsSection from './components/Skills/skills'
-import GithubCal from './components/GithubRepo/GitCalender'
-import Landing from "./components/contact/contact"
-import { TimelineDemo } from './components/Timeline/app'
-import Footer from './components/Footer/footer'
-import { AnimatedTestimonialsDemo } from './components/MyTeam/app'
-import Preloader from "./components/preloader/App"
-import AnimatedModalDemo from "./components/viewProject/App"
-import Card from './components/projects/Card'
+import Navbar from "./components/Navbar/navbar";
+import HeroSection from "./components/HeroSection/HeroSection";
+import About from "./components/About/about";
+import Projects from "./components/projects/projects";
+import LeetCode from "./components/Leetcode/leetcode";
+import Skills from "./components/Skills/skills";
+import { AnimatedTestimonialsDemo } from "./components/MyTeam/app";
+import Timeline from "./components/Timeline/timeline";
+import Mygithub from "./components/GithubRepo/github";
+import Contact from "./components/Contact/contact";
+import Footer from "./components/Footer/footer";
+import "./App.css";
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 3000);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
-    <>
-    {isLoading ? <Preloader /> : 
-    <div>
-      <NavbarDemo/>
-      <Homepage/>
-
-      <AboutMe/>
-      <BentoGridDemo/>
-      <AnimatedTestimonialsDemo/>
-      <LeetCodeProgress/>
-      <LeetcodeCal/>
-      <Mygithub/>
-      <GithubCal/>
-      <SkillsSection/>
-      <TimelineDemo/>
-      <Landing/>
-      <Footer/>
-    </div>}
-    </>
-  )
+    <div 
+      className="app-container"
+      style={{
+        background: 'linear-gradient(180deg, #0a0a0f 0%, #0f1419 50%, #0a0a0f 100%)',
+        minHeight: '100vh',
+      }}
+    >
+      <Navbar />
+      <main>
+        <HeroSection />
+        <About />
+        <Projects />
+        <LeetCode />
+        <Skills />
+        <AnimatedTestimonialsDemo />
+        <Timeline />
+        <Mygithub />
+        <Contact />
+      </main>
+      <Footer />
+    </div>
+  );
 }
 
-export default App
+export default App;

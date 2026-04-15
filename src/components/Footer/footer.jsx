@@ -1,170 +1,172 @@
-import React from 'react';
-import { FaTwitter, FaFacebookF, FaInstagram } from 'react-icons/fa';
-import { FaArrowRightLong } from "react-icons/fa6";
+import React from "react";
+import { motion } from "framer-motion";
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaHeart, FaArrowUp } from "react-icons/fa";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
+  const socialLinks = [
+    { icon: FaGithub, href: "https://github.com/SangikGhosh", label: "GitHub" },
+    { icon: FaLinkedin, href: "https://www.linkedin.com/in/sangikghosh/", label: "LinkedIn" },
+    { icon: FaTwitter, href: "https://twitter.com/SangikGhosh", label: "Twitter" },
+    { icon: FaInstagram, href: "https://www.instagram.com/", label: "Instagram" },
+  ];
+
+  const navLinks = [
+    { label: "Home", href: "#home" },
+    { label: "About", href: "#about" },
+    { label: "Projects", href: "#projects" },
+    { label: "Skills", href: "#skills" },
+    { label: "Contact", href: "#contact" },
+  ];
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="bg-black text-white py-10">
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* About Section */}
-        <div>
-          <h3 className="font-bold text-2xl text-blue-700 mb-3">About</h3>
-          <p className="text-gray-400 mb-4">
-            Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.
-          </p>
-          <div className="flex space-x-3">
-            <a href="https://x.com/Sangik_Ghosh" target='_blank' className="p-2 bg-gray-700 rounded-full">
-              <FaTwitter className='bg-gray-700'/>
-            </a>
-            <a href="https://www.facebook.com/profile.php?id=100088473806630" target='_blank' className="p-2 bg-gray-700 rounded-full">
-              <FaFacebookF className='bg-gray-700'/>
-            </a>
-            <a href="https://www.instagram.com/s.a.n.g.i.k_/" target='_blank' className="p-2 bg-gray-700 rounded-full">
-              <FaInstagram className='bg-gray-700'/>
-            </a>
+    <footer 
+      className="relative pt-20 pb-8 px-6 md:px-12 lg:px-20"
+      style={{
+        background: 'linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.3) 100%)',
+        borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+      }}
+    >
+      <div className="relative max-w-7xl mx-auto">
+        {/* Main Content */}
+        <div className="grid md:grid-cols-3 gap-12 mb-12">
+          {/* Brand */}
+          <div>
+            <motion.a 
+              href="#home"
+              className="inline-block text-2xl font-bold mb-4"
+              whileHover={{ scale: 1.05 }}
+            >
+              <span 
+                style={{
+                  background: 'linear-gradient(135deg, #3b82f6 0%, #22d3ee 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Sangik
+              </span>
+              <span className="text-white">.dev</span>
+            </motion.a>
+            <p className="text-sm leading-relaxed mb-6" style={{ color: '#a1a1aa' }}>
+              A passionate software developer crafting beautiful and functional digital experiences. Let&apos;s build something amazing together.
+            </p>
+            <div className="flex gap-3">
+              {socialLinks.map((social, index) => (
+                <motion.a
+                  key={index}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -4, scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-2.5 rounded-lg transition-all duration-300"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                  }}
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-4 h-4 text-white" />
+                </motion.a>
+              ))}
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-white font-semibold mb-6">Quick Links</h4>
+            <ul className="space-y-3">
+              {navLinks.map((link, index) => (
+                <li key={index}>
+                  <motion.a
+                    href={link.href}
+                    className="text-sm transition-colors duration-300"
+                    style={{ color: '#a1a1aa' }}
+                    whileHover={{ x: 4, color: '#22d3ee' }}
+                  >
+                    {link.label}
+                  </motion.a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="text-white font-semibold mb-6">Get in Touch</h4>
+            <div className="space-y-3">
+              <p className="text-sm" style={{ color: '#a1a1aa' }}>
+                <span className="text-white">Email:</span> sangikghosh45@gmail.com
+              </p>
+              <p className="text-sm" style={{ color: '#a1a1aa' }}>
+                <span className="text-white">Location:</span> Kolkata, India
+              </p>
+            </div>
+            
+            {/* Scroll to Top */}
+            <motion.button
+              onClick={scrollToTop}
+              whileHover={{ y: -4, scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="mt-6 px-5 py-3 rounded-xl text-sm font-medium flex items-center gap-2 transition-all duration-300"
+              style={{
+                background: 'rgba(59, 130, 246, 0.1)',
+                border: '1px solid rgba(59, 130, 246, 0.3)',
+                color: '#22d3ee',
+              }}
+            >
+              <FaArrowUp />
+              Back to Top
+            </motion.button>
           </div>
         </div>
 
-        {/* Links Section */}
-        <div>
-          <h3 className="font-bold text-2xl text-blue-700 mb-3">Links</h3>
-          <ul className="space-y-2">
-            <li>
-              <a 
-                href="#home" 
-                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0"
-                  onClick={(e) => {
-                  e.preventDefault(); // Prevent default anchor behavior
-                  document.querySelector('#home')?.scrollIntoView({ 
-                    behavior: 'smooth' // Enable smooth scroll 
-                  });
-                }}
-                >
-                <span className="block pl-0 group-hover:pl-2 transition-all duration-200">
-                  Home
-                </span>
-              </a>
-            </li>
-            <li>
-              <a 
-                href="#aboutMe" 
-                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0"
-                  onClick={(e) => {
-                  e.preventDefault(); // Prevent default anchor behavior
-                  document.querySelector('#aboutMe')?.scrollIntoView({ 
-                    behavior: 'smooth' // Enable smooth scroll 
-                  });
-                }}
-                >
-                <span className="block pl-0 group-hover:pl-2 transition-all duration-200">
-                  About
-                </span>
-              </a>
-            </li>
-            <li>
-              <a 
-                href="#projects" 
-                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0"
-                                  onClick={(e) => {
-                  e.preventDefault(); // Prevent default anchor behavior
-                  document.querySelector('#projects')?.scrollIntoView({ 
-                    behavior: 'smooth' // Enable smooth scroll 
-                  });
-                }}
-                >
-                <span className="block pl-0 group-hover:pl-2 transition-all duration-200">
-                  Projects
-                </span>
-              </a>
-            </li>
-            <li>
-              <a 
-                href="#achievements" 
-                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0"
-                  onClick={(e) => {
-                  e.preventDefault(); // Prevent default anchor behavior
-                  document.querySelector('#achievements')?.scrollIntoView({ 
-                    behavior: 'smooth' // Enable smooth scroll 
-                  });
-                }}
-                >
-                <span className="block pl-0 group-hover:pl-2 transition-all duration-200">
-                Achievements
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#contact"
-                className="text-gray-400 hover:text-green-500 group block transition-colors duration-0"
-                onClick={(e) => {
-                  e.preventDefault(); // Prevent default anchor behavior
-                  document.querySelector('#contact')?.scrollIntoView({ 
-                    behavior: 'smooth' // Enable smooth scroll 
-                  });
-                }}
-              >
-                <span className="block pl-0 group-hover:pl-2 transition-all duration-200">
-                  Contact
-                </span>
-              </a>
-            </li>
-          </ul>
-        </div>
+        {/* Divider */}
+        <div 
+          className="h-px w-full mb-8"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent)' }}
+        />
 
-        {/* Services Section */}
-        <div>
-          <h3 className="font-bold text-2xl text-blue-700 mb-3">Services</h3>
-          <ul className="space-y-2 cursor-pointer">
-            <li className="text-gray-400 hover:text-green-500 group block transition-colors duration-0">
-                <span className="block pl-0 group-hover:pl-2 transition-all duration-300">
-                Web Design
-                </span>
-            </li>
-            <li className="text-gray-400 hover:text-green-500 group block transition-colors duration-0">
-                <span className="block pl-0 group-hover:pl-2 transition-all duration-300">
-                Web Development
-                </span>
-            </li>
-            <li className="text-gray-400 hover:text-green-500 group block transition-colors duration-0">
-                <span className="block pl-0 group-hover:pl-2 transition-all duration-300">
-                Business Strategy
-                </span>
-            </li>
-            <li className="text-gray-400 hover:text-green-500 group block transition-colors duration-0">
-                <span className="block pl-0 group-hover:pl-2 transition-all duration-300">
-                 Data Analysis
-                </span>
-            </li>
-            <li className="text-gray-400 hover:text-green-500 group block transition-colors duration-0">
-                <span className="block pl-0 group-hover:pl-2 transition-all duration-300">
-                Graphic Design
-                </span>
-            </li>
-          </ul>
+        {/* Bottom Bar */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-sm flex items-center gap-1" style={{ color: '#71717a' }}>
+            &copy; {currentYear} Sangik Ghosh. Made with 
+            <motion.span
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+            >
+              <FaHeart className="text-red-500 mx-1" />
+            </motion.span>
+            in India
+          </p>
+          
+          <div className="flex items-center gap-6">
+            <a 
+              href="#" 
+              className="text-xs transition-colors"
+              style={{ color: '#71717a' }}
+              onMouseEnter={(e) => e.target.style.color = '#22d3ee'}
+              onMouseLeave={(e) => e.target.style.color = '#71717a'}
+            >
+              Privacy Policy
+            </a>
+            <a 
+              href="#" 
+              className="text-xs transition-colors"
+              style={{ color: '#71717a' }}
+              onMouseEnter={(e) => e.target.style.color = '#22d3ee'}
+              onMouseLeave={(e) => e.target.style.color = '#71717a'}
+            >
+              Terms of Service
+            </a>
+          </div>
         </div>
-
-
-        {/* Contact Section */}
-        <div>
-          <h3 className="font-bold text-2xl text-blue-700 mb-3">Have a Questions?</h3>
-          <ul className="space-y-2 text-gray-400">
-            <li className="flex items-center">
-              <span className="mr-2">📍</span> 17/K/25 Ultadanda, North 24 Parganas, West Bengal, India 
-            </li>
-            <li className="flex items-center">
-              <span className="mr-2">📞</span> +91 62958 94643
-            </li>
-            <li className="flex items-center">
-              <span className="mr-2">📧</span> sangik.ghosh1@gmail.com
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className="text-center text-gray-500 mt-10">
-        <p>
-          Copyright ©2024 All rights reserved | This template is made with ❤️ by Sangik Ghosh
-        </p>
       </div>
     </footer>
   );

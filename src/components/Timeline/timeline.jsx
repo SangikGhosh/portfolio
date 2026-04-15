@@ -1,69 +1,227 @@
-import { useScroll, useTransform, motion } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { FaGraduationCap, FaCode, FaBriefcase, FaCertificate } from "react-icons/fa";
 
-export const Timeline = ({ data }) => {
-  const ref = useRef(null);
+const timelineData = [
+  {
+    year: "2027",
+    title: "B.Tech. Degree (Expected)",
+    institution: "Brainware University, Kolkata",
+    description: "Currently pursuing Bachelor of Technology in Computer Science & Engineering with a focus on Full-Stack Development and AI/ML.",
+    icon: FaGraduationCap,
+    status: "current",
+  },
+  {
+    year: "2023",
+    title: "Started Programming Journey",
+    institution: "Self-Learning & Online Courses",
+    description: "Began learning programming with Java, Python, and web technologies. Started solving problems on LeetCode and building personal projects.",
+    icon: FaCode,
+    status: "completed",
+  },
+  {
+    year: "2022",
+    title: "Higher Secondary Education",
+    institution: "West Bengal Board",
+    description: "Completed 12th standard with focus on Science stream. This is where my passion for technology and computer science truly ignited.",
+    icon: FaCertificate,
+    status: "completed",
+  },
+  {
+    year: "2020",
+    title: "Secondary Education",
+    institution: "West Bengal Board",
+    description: "Successfully completed 10th standard. Started exploring basic programming concepts and developed interest in technology.",
+    icon: FaBriefcase,
+    status: "completed",
+  },
+];
+
+const Timeline = () => {
   const containerRef = useRef(null);
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect();
-      setHeight(rect.height);
-    }
-  }, [ref]);
-
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 10%", "end 50%"],
+    offset: ["start end", "end start"]
   });
 
-  const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
-  const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <div className="w-full bg-white dark:bg-neutral-950 font-sans md:px-10" ref={containerRef}>
-      <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">
-        <h2 className="text-lg md:text-5xl mb-4 pb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 max-w-4xl">
-          Changelog from my journey
-        </h2>
-        <p className="text-neutral-700 dark:text-neutral-300 text-sm md:text-lg">
-          I've been immersed in the field of Computer Science and Technology for the past two years, building knowladge and honing my skills. Here&apos;s a timeline of my journey.
-        </p>
-      </div>
-      <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
-        {data.map((item, index) => (
-          <div key={index} className="flex flex-col md:flex-row justify-start pt-10 md:pt-40 md:gap-10">
-            <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
-              <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-white dark:bg-black flex items-center justify-center">
-                <div className="h-4 w-4 rounded-full bg-neutral-200 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 p-2" />
-              </div>
-              <h3 className="hidden md:block text-xl md:pl-20 md:text-5xl font-bold text-neutral-500 dark:text-neutral-500">
-                {item.title}
-              </h3>
-            </div>
+    <div 
+      ref={sectionRef}
+      id="timeline"
+      className="timeline relative py-24 lg:py-32 px-6 md:px-12 lg:px-20"
+    >
+      {/* Background Gradient */}
+      <div 
+        className="absolute top-1/2 left-1/4 w-[600px] h-[600px] opacity-20 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(34, 211, 238, 0.2) 0%, transparent 70%)',
+          filter: 'blur(100px)',
+        }}
+      />
 
-            <div className="relative pl-20 pr-4 md:pl-4 w-full">
-              <h3 className="md:hidden block text-2xl mb-4 text-left font-bold text-neutral-500 dark:text-neutral-500">
-                {item.title}
-              </h3>
-              {item.content}
-            </div>
-          </div>
-        ))}
-        <div
-          style={{
-            height: height + "px",
-          }}
-          className="absolute md:left-8 left-8 top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-[0%] via-neutral-200 dark:via-neutral-700 to-transparent to-[99%] [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]">
-          <motion.div
+      <div className="relative max-w-5xl mx-auto">
+        {/* Section Header */}
+        <motion.div 
+          className="text-center mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+        >
+          <span 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold tracking-widest uppercase mb-6"
             style={{
-              height: heightTransform,
-              opacity: opacityTransform,
+              background: 'rgba(59, 130, 246, 0.1)',
+              border: '1px solid rgba(59, 130, 246, 0.3)',
+              color: '#22d3ee',
             }}
-            className="absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-purple-500 via-blue-500 to-transparent from-[0%] via-[10%] rounded-full" />
+          >
+            Journey
+          </span>
+          
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <span className="text-white">My </span>
+            <span 
+              style={{
+                background: 'linear-gradient(135deg, #3b82f6 0%, #22d3ee 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              Timeline
+            </span>
+          </h2>
+          
+          <p className="text-lg max-w-2xl mx-auto" style={{ color: '#a1a1aa' }}>
+            A journey of continuous learning and growth in the world of technology.
+          </p>
+        </motion.div>
+
+        {/* Timeline */}
+        <div ref={containerRef} className="relative">
+          {/* Animated Line */}
+          <div 
+            className="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-0.5"
+            style={{ background: 'rgba(255, 255, 255, 0.1)' }}
+          >
+            <motion.div 
+              className="w-full"
+              style={{ 
+                height: lineHeight,
+                background: 'linear-gradient(180deg, #3b82f6 0%, #22d3ee 100%)',
+              }}
+            />
+          </div>
+
+          {/* Timeline Items */}
+          <div className="space-y-12">
+            {timelineData.map((item, index) => (
+              <TimelineItem 
+                key={index} 
+                item={item} 
+                index={index}
+                isInView={isInView}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
+const TimelineItem = ({ item, index, isInView }) => {
+  const isEven = index % 2 === 0;
+  const Icon = item.icon;
+  const itemRef = useRef(null);
+  const itemInView = useInView(itemRef, { once: true, margin: "-50px" });
+
+  return (
+    <motion.div
+      ref={itemRef}
+      className={`relative flex items-center ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+      initial={{ opacity: 0, y: 50 }}
+      animate={itemInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+    >
+      {/* Content */}
+      <div className={`flex-1 ml-12 md:ml-0 ${isEven ? 'md:pr-16 md:text-right' : 'md:pl-16'}`}>
+        <motion.div
+          whileHover={{ y: -4 }}
+          className="p-6 rounded-2xl transition-all duration-300"
+          style={{
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.06)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+            e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px -15px rgba(59, 130, 246, 0.3)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+            e.currentTarget.style.boxShadow = 'none';
+          }}
+        >
+          <span 
+            className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3"
+            style={{
+              background: item.status === 'current' 
+                ? 'rgba(34, 211, 238, 0.1)' 
+                : 'rgba(59, 130, 246, 0.1)',
+              border: item.status === 'current' 
+                ? '1px solid rgba(34, 211, 238, 0.3)' 
+                : '1px solid rgba(59, 130, 246, 0.3)',
+              color: item.status === 'current' ? '#22d3ee' : '#3b82f6',
+            }}
+          >
+            {item.year}
+          </span>
+          <h3 className="text-xl font-bold text-white mb-1">{item.title}</h3>
+          <p className="text-sm mb-3" style={{ color: '#22d3ee' }}>{item.institution}</p>
+          <p className="text-sm" style={{ color: '#a1a1aa' }}>{item.description}</p>
+        </motion.div>
+      </div>
+
+      {/* Center Icon */}
+      <motion.div 
+        className="absolute left-4 md:left-1/2 -translate-x-1/2 z-10"
+        initial={{ scale: 0 }}
+        animate={itemInView ? { scale: 1 } : {}}
+        transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+      >
+        <div 
+          className="w-10 h-10 rounded-full flex items-center justify-center"
+          style={{
+            background: item.status === 'current' 
+              ? 'linear-gradient(135deg, #3b82f6 0%, #22d3ee 100%)'
+              : 'rgba(255, 255, 255, 0.05)',
+            border: item.status === 'current' 
+              ? 'none' 
+              : '1px solid rgba(255, 255, 255, 0.15)',
+            boxShadow: item.status === 'current' 
+              ? '0 0 20px rgba(34, 211, 238, 0.5)' 
+              : 'none',
+          }}
+        >
+          <Icon 
+            className="w-4 h-4"
+            style={{ 
+              color: item.status === 'current' ? '#0a0a0f' : '#a1a1aa' 
+            }}
+          />
+        </div>
+      </motion.div>
+
+      {/* Empty Spacer */}
+      <div className="hidden md:block flex-1" />
+    </motion.div>
+  );
+};
+
+export default Timeline;

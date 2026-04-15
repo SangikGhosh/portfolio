@@ -1,4 +1,3 @@
-import { TextHoverEffect } from "../GlowText/ui";
 import { AnimatedTestimonials } from "./ui";
 
 export function AnimatedTestimonialsDemo() {
@@ -7,7 +6,7 @@ export function AnimatedTestimonialsDemo() {
       quote:
         "Join us as a Java Software Engineer to develop robust applications. Strong Java and web technology skills required. Familiarity with Agile and version control is a plus.",
       name: "Sangik Ghosh",
-      designation: "Java Devoloper",
+      designation: "Java Developer",
       src: "https://avatars.githubusercontent.com/u/136787875?v=4",
     },
     {
@@ -32,10 +31,6 @@ export function AnimatedTestimonialsDemo() {
       src: "https://avatars.githubusercontent.com/u/80311301?v=4",
     }
   ];
-  return (
-    <>
-    
-  <AnimatedTestimonials testimonials={testimonials} />
-</>
-  );
+  
+  return <AnimatedTestimonials testimonials={testimonials} autoplay={true} />;
 }
