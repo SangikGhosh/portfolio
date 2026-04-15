@@ -1,7 +1,7 @@
-import Navbar from "./components/Navbar/navbar";
-import HeroSection from "./components/HeroSection/HeroSection";
-import About from "./components/About/about";
-import Projects from "./components/projects/projects";
+import Navbar from "./components/navbar/navbar";
+import HeroSection from "./components/home";
+import About from "./components/about/aboutMe";
+import Projects from "./components/projects/app";
 import LeetCode from "./components/Leetcode/leetcode";
 import Skills from "./components/Skills/skills";
 import { AnimatedTestimonialsDemo } from "./components/MyTeam/app";
