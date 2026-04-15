@@ -22,6 +22,8 @@ export function NavbarDemo() {
   );
 }
 
+export default Navbar;
+
 function Navbar({ className }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [active, setActive] = useState(null);
