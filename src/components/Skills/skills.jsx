@@ -13,15 +13,16 @@ import { BsCCircleFill } from "react-icons/bs";
 
 const skillsData = [
   { name: "Java", level: 100, color: "#f44e0d", icon: FaJava },
-  { name: "Python", level: 50, color: "#f7cd43", icon: FaPython },
+  { name: "Spring Boot", level: 100, color: "#6db33f", icon: FaJava },
+  { name: "Spring Security", level: 100, color: "#6db33f", icon: FaJava },
+  { name: "Python", level: 80, color: "#f7cd43", icon: FaPython },
+  { name: "Flutter", level: 80, color: "#1ebbbd", icon: FaReact },
   { name: "C", level: 80, color: "#a8b9cb", icon: BsCCircleFill },
-  { name: "JavaScript", level: 80, color: "#f5d33c", icon: FaJs },
   { name: "SQL", level: 60, color: "#0876c8", icon: FaDatabase },
   { name: "React", level: 50, color: "#5ed3f3", icon: FaReact },
   { name: "Node.js", level: 70, color: "#68A063", icon: FaNodeJs },
   { name: "JDBC", level: 60, color: "#0d9b8e", icon: FaJava },
   { name: "JavaFX", level: 50, color: "#f88e0d", icon: FaJava },
-  { name: "Numpy", level: 20, color: "#556bd5", icon: SiNumpy },
   { name: "Tailwind CSS", level: 80, color: "#1ebbbd", icon: SiTailwindcss },
 ];
 

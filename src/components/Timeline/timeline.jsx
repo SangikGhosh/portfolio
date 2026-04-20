@@ -4,12 +4,20 @@ import { FaGraduationCap, FaCode, FaBriefcase, FaCertificate } from "react-icons
 
 const timelineData = [
   {
-    year: "2027",
-    title: "B.Tech. Degree (Expected)",
-    institution: "Brainware University, Kolkata",
-    description: "Currently pursuing Bachelor of Technology in Computer Science & Engineering with a focus on Full-Stack Development and AI/ML.",
+    year: "2025 - 2028",
+    title: "B.Tech in CSE (AI & ML)",
+    institution: "Heritage Institute of Technology, Kolkata",
+    description: "Currently pursuing Bachelor of Technology in Computer Science and Engineering with specialization in Artificial Intelligence & Machine Learning.",
     icon: FaGraduationCap,
     status: "current",
+  },
+  {
+    year: "2025",
+    title: "Diploma in CST",
+    institution: "Behala Govt. Polytechnic",
+    description: "Completed Diploma in Computer Science & Technology with OGPA: 8.1 | Overall Percentage: 79.6%. This is where my coding journey began and where I built my foundational programming skills.",
+    icon: FaCertificate,
+    status: "completed",
   },
   {
     year: "2023",
@@ -17,14 +25,6 @@ const timelineData = [
     institution: "Self-Learning & Online Courses",
     description: "Began learning programming with Java, Python, and web technologies. Started solving problems on LeetCode and building personal projects.",
     icon: FaCode,
-    status: "completed",
-  },
-  {
-    year: "2022",
-    title: "Higher Secondary Education",
-    institution: "West Bengal Board",
-    description: "Completed 12th standard with focus on Science stream. This is where my passion for technology and computer science truly ignited.",
-    icon: FaCertificate,
     status: "completed",
   },
   {
