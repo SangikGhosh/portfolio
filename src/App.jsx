@@ -1,50 +1,39 @@
-import { useState, useEffect } from 'react'
-import Homepage from './components/home'
-import { NavbarDemo } from './components/navbar/navbar'
-import { BentoGridDemo } from './components/projects/app'
-import AboutMe from './components/about/aboutMe'
-import LeetCodeProgress from "./components/Leetcode/leetcode"
-import LeetcodeCal from './components/Leetcode/calender'
-import Mygithub from './components/GithubRepo/github'
-import SkillsSection from './components/Skills/skills'
-import GithubCal from './components/GithubRepo/GitCalender'
-import Landing from "./components/contact/contact"
-import { TimelineDemo } from './components/Timeline/app'
-import Footer from './components/Footer/footer'
-import { AnimatedTestimonialsDemo } from './components/MyTeam/app'
-import Preloader from "./components/preloader/App"
-import AnimatedModalDemo from "./components/viewProject/App"
-import Card from './components/projects/Card'
+import { SmoothScrollProvider } from "./lib/smooth";
+import Nav from "./components/Nav";
+import Hero from "./components/Hero";
+import Work from "./components/work/Work";
+import Quote from "./components/Quote";
+import ChapterTransition from "./components/ChapterTransition";
+import About from "./components/night/About";
+import Practice from "./components/night/Practice";
+import Journey from "./components/night/Journey";
+import Toolbox from "./components/night/Toolbox";
+import Contact from "./components/night/Contact";
 
-function App() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 3000);
-    return () => clearTimeout(timer);
-  }, []);
-
+export default function App() {
   return (
-    <>
-    {isLoading ? <Preloader /> : 
-    <div>
-      <NavbarDemo/>
-      <Homepage/>
-
-      <AboutMe/>
-      <BentoGridDemo/>
-      <AnimatedTestimonialsDemo/>
-      <LeetCodeProgress/>
-      <LeetcodeCal/>
-      <Mygithub/>
-      <GithubCal/>
-      <SkillsSection/>
-      <TimelineDemo/>
-      <Landing/>
-      <Footer/>
-    </div>}
-    </>
-  )
+    <SmoothScrollProvider>
+      <a
+        href="#work"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+      >
+        Skip to work
+      </a>
+      <div className="grain" aria-hidden="true" />
+      <Nav />
+      <main>
+        <Hero />
+        <Work />
+        <Quote />
+        <ChapterTransition />
+        <div className="night">
+          <About />
+          <Practice />
+          <Journey />
+          <Toolbox />
+          <Contact />
+        </div>
+      </main>
+    </SmoothScrollProvider>
+  );
 }
-
-export default App
