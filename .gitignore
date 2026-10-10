@@ -8,10 +8,6 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-
-# GT Standard trial fonts: licensed for local testing only, never commit or publish them.
-# Buy a web licence from Grilli Type, then remove this line and commit the licensed files.
-public/fonts/gt-standard/
 dist
 dist-ssr
 *.local

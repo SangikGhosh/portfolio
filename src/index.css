@@ -4,8 +4,8 @@
 
 /* ─────────────────────────────────────────────────────────────
    Two colours, one family.
-   Pure white and pure black; GT Standard for everything (Funnel as the fallback
-   while the trial font is missing glyphs or files). Weight 400 almost everywhere — size and
+   Pure white and pure black; GT Standard for everything (Funnel fills in the
+   punctuation the font files don't include). Weight 400 almost everywhere — size and
    space do the work, not boldness.
    ───────────────────────────────────────────────────────────── */
 
@@ -27,18 +27,18 @@
   --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-/* GT Standard — the trial files live in public/fonts/gt-standard and are git-ignored.
-   Where they are absent (any deploy built from git) the stacks below fall back to Funnel. */
+/* GT Standard — bundled from src/assets/fonts/gt-standard. Funnel fills in the punctuation
+   these files don't include. */
 @font-face {
   font-family: "GT Standard";
-  src: url("/fonts/gt-standard/GT-Standard-L-Standard-Regular-Trial.woff2") format("woff2");
+  src: url("./assets/fonts/gt-standard/GT-Standard-L-Standard-Regular-Trial.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "GT Standard";
-  src: url("/fonts/gt-standard/GT-Standard-L-Standard-Medium-Trial.woff2") format("woff2");
+  src: url("./assets/fonts/gt-standard/GT-Standard-L-Standard-Medium-Trial.otf") format("opentype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
