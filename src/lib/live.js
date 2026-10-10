@@ -43,11 +43,10 @@ function leetcodeDays(calendar) {
 }
 
 async function loadAll() {
-  const [lc, gh, contrib, repos] = await Promise.allSettled([
+  const [lc, gh, contrib] = await Promise.allSettled([
     getJSON(`https://leetcode-api-faisalshohag.vercel.app/${profile.leetcode}`),
     getJSON(`https://api.github.com/users/${profile.github}`),
     getJSON(`https://github-contributions-api.jogruber.de/v4/${profile.github}?y=last`),
-    getJSON(`https://api.github.com/users/${profile.github}/repos?sort=pushed&per_page=30`),
   ]);
 
   const data = {
@@ -61,7 +60,6 @@ async function loadAll() {
       days: {},
     },
     github: { repos: statsSnapshot.publicRepos, contributions: statsSnapshot.contributions, days: [] },
-    repos: [],
   };
 
   if (lc.status === "fulfilled" && typeof lc.value.totalSolved === "number") {
@@ -82,18 +80,6 @@ async function loadAll() {
     data.github.contributions = contrib.value.total?.lastYear ?? data.github.contributions;
     data.github.days = contrib.value.contributions;
     data.live = true;
-  }
-  if (repos.status === "fulfilled" && Array.isArray(repos.value)) {
-    data.repos = repos.value
-      .filter((r) => !r.fork && r.name.toLowerCase() !== profile.github.toLowerCase())
-      .slice(0, 6)
-      .map((r) => ({
-        name: r.name,
-        language: r.language,
-        url: r.html_url,
-        pushed: r.pushed_at,
-        stars: r.stargazers_count,
-      }));
   }
   return data;
 }

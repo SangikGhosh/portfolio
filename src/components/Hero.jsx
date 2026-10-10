@@ -1,258 +1,183 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import PropTypes from "prop-types";
-import {
-  easeInOut,
-  motion,
-  useMotionValueEvent,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-import Terminal from "./Terminal";
-import { buildScript } from "./terminalScript";
-import { stack } from "../data/content";
-import { useLiveStats } from "../lib/live";
-import { SCREEN_FS, SCREEN_H_BIG, SCREEN_H_SMALL } from "../lib/terminalGeometry";
-import { ArrowRight } from "./ui/primitives";
+import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { useBlink } from "../lib/blink";
+import { useSmoothScroll } from "../lib/smooth";
+import { firstHeroImage, heroOrder, loadImage, preloadRest } from "../lib/heroImages";
+import { hero, profile } from "../data/content";
+import { ArrowRight, EASE, EASE_IN_OUT, FadeIn, Label, RiseText, Roll } from "./ui/primitives";
 
-/** Wait for web fonts (max 700ms) so the entrance never shows a font swap. */
-function useFontsReady(timeout = 700) {
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    let done = false;
-    const finish = () => {
-      if (!done) {
-        done = true;
-        setReady(true);
-      }
-    };
-    const t = setTimeout(finish, timeout);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(finish);
-    else finish();
-    return () => clearTimeout(t);
-  }, [timeout]);
-  return ready;
+const HOLD = 6500; // ms each picture stays fully in view
+const DISSOLVE = 2.2; // s for the soft cross-dissolve between pictures
+const DRIFT = (HOLD + DISSOLVE * 1000 * 2) / 1000; // s of slow pull-back while a picture is on screen
+const SOFT = [0.22, 1, 0.36, 1];
+
+/** One word of the name; its letters rise one after another behind a shared mask. */
+function Word({ word, play, delay }) {
+  const reduce = useReducedMotion();
+  return (
+    <span className="inline-block overflow-hidden pb-[0.2em] -mb-[0.2em] pt-[0.04em] -mt-[0.04em] align-bottom">
+      {word.split("").map((ch, i) => (
+        <motion.span
+          key={i}
+          className="inline-block will-change-transform"
+          initial={reduce ? false : { y: "108%" }}
+          animate={play ? { y: "0%" } : undefined}
+          transition={{ duration: 1.25, ease: EASE, delay: delay + i * 0.045 }}
+        >
+          {ch}
+        </motion.span>
+      ))}
+    </span>
+  );
 }
 
-const EASE = [0.16, 1, 0.3, 1];
+/**
+ * The window inside the name. It opens once the letters land, then dissolves slowly from one
+ * picture to the next in this visit's random order — never to a picture that hasn't finished
+ * downloading (it just holds the current one a little longer).
+ */
+function Slot({ play }) {
+  const reduce = useReducedMotion();
+  const [layers, setLayers] = useState(() => [{ src: heroOrder[0], id: 0 }]);
+  const [firstReady, setFirstReady] = useState(false);
 
-/* Scroll choreography, in viewport-heights of scroll (the device stays pinned for RUNWAY). */
-const RUNWAY = 2.4; // × 100svh
-/* How big the device gets once it takes the stage: bigger than in the hero, never overwhelming. */
-const STAGE = { maxScale: 1.5, maxHeight: 0.7, maxWidth: 0.62 }; // × itself, × viewport h, × viewport w
-const T = {
-  lift: [0, 0.72], // device travels from its hero slot to the centre of an empty screen
-  grow: [0.06, 0.72], // …and scales up
-  tilt: [0, 0.32, 0.72], // tilts back in 3D, then settles flat
-  screen: [0.18, 0.72], // its screen gets taller
-  hint: [0, 0.07],
-  run: [0.8, 1.08, 1.36, 1.64, 1.92], // each threshold executes the next command
-};
+  useEffect(() => {
+    let alive = true;
+    firstHeroImage.then((ok) => alive && ok && setFirstReady(true));
+    return () => {
+      alive = false;
+    };
+  }, []);
 
-/* ── the headline block: shared by the pinned and the static hero ── */
-function HeroCopy({ ready, reduce, touch, slot, hintOpacity }) {
-  const item = (i) => ({
-    initial: reduce ? false : { opacity: 0, y: 14 },
-    animate: ready ? { opacity: 1, y: 0 } : undefined,
-    transition: { duration: 0.55, delay: 0.03 * i, ease: EASE },
-  });
+  useEffect(() => {
+    if (!play || reduce || heroOrder.length < 2) return undefined;
+    preloadRest();
+    let alive = true;
+    let timer;
+    const wait = (ms) =>
+      new Promise((r) => {
+        timer = setTimeout(r, ms);
+      });
+
+    (async () => {
+      let i = 0;
+      let misses = 0;
+      await wait(HOLD + 1600); // the opening picture stays a little longer, while the intro settles
+      while (alive && misses < heroOrder.length) {
+        const next = (i + 1) % heroOrder.length;
+        const ok = await loadImage(heroOrder[next]); // usually already in the cache
+        if (!alive) return;
+        i = next;
+        if (!ok) {
+          misses += 1; // a broken link is skipped, never shown
+          continue;
+        }
+        misses = 0;
+        setLayers((ls) => [...ls.slice(-1), { src: heroOrder[i], id: Date.now() }]);
+        await wait(HOLD + DISSOLVE * 1000);
+      }
+    })();
+
+    return () => {
+      alive = false;
+      clearTimeout(timer);
+    };
+  }, [play, reduce]);
+
+  return (
+    <motion.span
+      className="relative mx-[0.06em] inline-block h-[0.68em] overflow-hidden rounded-[0.025em] bg-surface align-baseline"
+      initial={{ width: reduce ? "0.91em" : "0em" }}
+      animate={play && !reduce ? { width: "0.91em" } : undefined}
+      transition={{ duration: 1.1, ease: EASE_IN_OUT, delay: 0.75 }}
+    >
+      {layers.map((l, k) => {
+        const opening = l.id === 0;
+        return (
+          <motion.span
+            key={l.id}
+            className="absolute inset-0 block"
+            initial={opening ? { opacity: 0 } : { opacity: 0, filter: "blur(12px)" }}
+            animate={opening ? { opacity: firstReady ? 1 : 0 } : { opacity: 1, filter: "blur(0px)" }}
+            transition={{ duration: opening ? 0.6 : DISSOLVE, ease: SOFT }}
+            style={{ zIndex: k }}
+          >
+            <motion.img
+              src={l.src}
+              alt=""
+              decoding="async"
+              className="h-full w-full object-cover"
+              initial={{ scale: reduce ? 1 : 1.12 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: reduce ? 0 : DRIFT, ease: "linear" }}
+            />
+          </motion.span>
+        );
+      })}
+    </motion.span>
+  );
+}
+
+export default function Hero() {
+  const { blink, revealed } = useBlink();
+  const { jump } = useSmoothScroll();
+  const play = revealed;
 
   return (
     <>
-      <motion.p {...item(0)} className="eyebrow inline-flex items-center gap-3">
-        <span className="h-[7px] w-[7px] rounded-full bg-accent-signal" />
-        Jr. AI Engineer — Kolkata, IN
-      </motion.p>
-
-      <motion.h1 {...item(1)} className="mt-[clamp(1.1rem,2.6vh,1.9rem)] text-h1 text-ink">
-        Robust systems,
-        <br />
-        <em className="accent">quietly</em> engineered.
-      </motion.h1>
-
-      <motion.p
-        {...item(2)}
-        className="mt-[clamp(1rem,2.4vh,1.6rem)] max-w-[38rem] text-[clamp(1.02rem,0.3vw+0.95rem,1.2rem)] leading-[1.55] text-ink-body"
+      {/* First screen: the name and three lines, nothing else. */}
+      <section
+        id="top"
+        className="relative flex h-[100svh] min-h-[32rem] flex-col items-center justify-center px-gutter pt-16 [--name:19vw] sm:[--name:min(13.6vw,31svh)]"
       >
-        Hi, I&rsquo;m Sangik. I build <span className="font-medium text-ink">LLM agents &amp; RAG</span>{" "}
-        pipelines, the <span className="font-medium text-ink">FastAPI &amp; Spring Boot</span> backends
-        behind them, and <span className="font-medium text-ink">Flutter</span> apps on top.
-      </motion.p>
+        <h1 className="text-center font-display text-[length:var(--name)] leading-[0.92] tracking-[-0.02em]">
+          <span className="sr-only">{profile.name}</span>
+          <span aria-hidden="true" className="inline-block whitespace-nowrap">
+            <Word word={profile.first} play={play} delay={0.1} />
+            <Slot play={play} />
+          </span>
+          <span aria-hidden="true" className="block sm:hidden" />
+          <span aria-hidden="true" className="inline-block whitespace-nowrap">
+            <Word word={profile.last} play={play} delay={0.3} />
+          </span>
+        </h1>
 
-      <motion.ul
-        {...item(3)}
-        className="mt-[clamp(1.1rem,2.6vh,1.75rem)] flex max-w-[44rem] flex-wrap items-center justify-center gap-2.5"
-        aria-label="Primary stack"
-      >
-        {stack.map((s) => (
-          <li key={s.label} className="pill-drop h-[2.2rem] px-4 text-[0.93rem] font-medium text-ink-body">
-            <span className="relative">{s.label}</span>
-          </li>
-        ))}
-      </motion.ul>
+        <RiseText
+          as="p"
+          text={hero.lines}
+          play={play}
+          delay={0.9}
+          stagger={0.03}
+          className="mt-[clamp(1.75rem,5svh,3.5rem)] text-center font-display text-[1.6rem] leading-[1.1] tracking-[-0.02em] sm:text-d2"
+        />
+      </section>
 
-      <div className="mt-[clamp(1.6rem,4vh,2.75rem)] w-full">{slot}</div>
-
-      <motion.div style={{ opacity: hintOpacity }}>
-        <motion.p
-          {...item(6)}
-          className="serif-italic mt-[clamp(1.4rem,3.2vh,2.2rem)] inline-flex items-center gap-2 text-[clamp(1.05rem,0.4vw+0.95rem,1.3rem)] text-ink-secondary"
-        >
-          {touch ? "Tap a key — it actually works" : "Press W, J, C or R — it actually works"}
-          <ArrowRight className="h-4 w-4 translate-y-[1px] opacity-70" />
-        </motion.p>
-      </motion.div>
+      {/* Revealed on the first scroll. */}
+      <div className="px-gutter">
+        <FadeIn y={16} className="grid grid-cols-12 gap-x-5 gap-y-5 border-t border-line pb-8 pt-5">
+          <div className="col-span-12 md:col-span-6">
+            <Label>Approach</Label>
+            <p className="mt-1 text-meta text-mute">{profile.availability}</p>
+          </div>
+          <p className="indent relative col-span-12 max-w-[23rem] text-lead sm:col-span-8 md:col-span-4">
+            <span className="absolute left-0 top-[0.55em] indent-0 text-micro tabular">01</span>
+            {hero.approach}
+          </p>
+          <div className="col-span-12 sm:col-span-4 sm:justify-self-end md:col-span-2">
+            <a
+              href="#about"
+              onClick={(e) => {
+                e.preventDefault();
+                blink(() => jump("about"));
+              }}
+              className="inline-flex items-center gap-2 text-meta"
+            >
+              <ArrowRight className="h-3.5 w-3.5" />
+              <Roll>More about me</Roll>
+            </a>
+          </div>
+        </FadeIn>
+      </div>
     </>
   );
-}
-HeroCopy.propTypes = {
-  ready: PropTypes.bool,
-  reduce: PropTypes.bool,
-  touch: PropTypes.bool,
-  slot: PropTypes.node,
-  hintOpacity: PropTypes.object,
-};
-
-const COLUMN =
-  "shell relative flex flex-col items-center justify-center pb-[clamp(2.5rem,6vh,4.5rem)] pt-[clamp(6rem,14vh,9rem)] text-center";
-
-/* Reduced motion: the original, static hero. */
-function StaticHero(props) {
-  return (
-    <section id="top" className="relative flex min-h-[100svh] flex-col overflow-hidden">
-      <div className={`${COLUMN} flex-1`}>
-        <HeroCopy {...props} slot={<Terminal />} />
-      </div>
-    </section>
-  );
-}
-
-/*
- * The hero copy scrolls away like normal content. The device lives on a sticky stage above it:
- * it starts exactly where the copy leaves room for it, then — as you scroll — tilts back in 3D,
- * glides to the middle of an empty screen and grows until it owns the viewport, where it runs
- * a short, real session. When the session is done the page carries on to the work.
- */
-function PinnedHero(props) {
-  const wrapRef = useRef(null);
-  const colRef = useRef(null);
-  const slotRef = useRef(null);
-  const devRef = useRef(null);
-  const [geo, setGeo] = useState({ slotH: 0, y0: 0, S: 1, big: SCREEN_H_BIG, fsBig: SCREEN_FS });
-
-  const live = useLiveStats();
-  const script = useMemo(() => buildScript(live), [live]);
-
-  const measure = useCallback(() => {
-    const wrap = wrapRef.current;
-    const slot = slotRef.current;
-    const root = devRef.current && devRef.current.querySelector("[data-terminal-root]");
-    const screen = root && root.querySelector("[data-screen]");
-    if (!wrap || !slot || !root || !screen) return;
-
-    const em = parseFloat(getComputedStyle(root).fontSize);
-    const screenNow = screen.offsetHeight / em; // current screen height in device em
-    const hSmall = root.offsetHeight - (screenNow - SCREEN_H_SMALL) * em; // device height at rest
-    const w0 = root.offsetWidth;
-    const V = window.innerHeight;
-    const W = window.innerWidth;
-    const narrow = W < 640;
-
-    // phones can't scale wider, so the screen grows taller (and its text a touch larger) instead
-    const chrome = hSmall / em - SCREEN_H_SMALL;
-    const big = narrow ? Math.min(Math.max((STAGE.maxHeight * V) / em - chrome, 12), 60) : SCREEN_H_BIG;
-    const hBig = hSmall + (big - SCREEN_H_SMALL) * em;
-    const S = narrow
-      ? 1
-      : Math.max(1, Math.min((STAGE.maxHeight * V) / hBig, (STAGE.maxWidth * W) / w0, STAGE.maxScale));
-
-    const slotTop = slot.getBoundingClientRect().top - wrap.getBoundingClientRect().top;
-    const y0 = slotTop + hSmall / 2 - V / 2;
-
-    setGeo((g) => {
-      const next = { slotH: hSmall, y0, S, big, fsBig: narrow ? 0.9 : SCREEN_FS };
-      const tol = { slotH: 0.5, y0: 0.5, S: 0.001, big: 0.01, fsBig: 0.001 };
-      const same = Object.keys(next).every((k) => Math.abs(next[k] - g[k]) < tol[k]);
-      return same ? g : next;
-    });
-  }, []);
-
-  useLayoutEffect(() => {
-    measure();
-  }, [measure, geo.slotH]);
-
-  useEffect(() => {
-    const ro = new ResizeObserver(() => measure());
-    if (colRef.current) ro.observe(colRef.current);
-    window.addEventListener("resize", measure);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", measure);
-    };
-  }, [measure]);
-
-  const { scrollYProgress } = useScroll({ target: wrapRef, offset: ["start start", "end end"] });
-  const s = useTransform(scrollYProgress, (p) => p * RUNWAY);
-
-  const y = useTransform(s, T.lift, [geo.y0, 0], { ease: easeInOut });
-  const scale = useTransform(s, T.grow, [1, geo.S], { ease: easeInOut });
-  const rotateX = useTransform(s, T.tilt, [0, 16, 0]);
-  const screenH = useTransform(s, T.screen, [SCREEN_H_SMALL, geo.big], { ease: easeInOut });
-  const screenFs = useTransform(s, T.screen, [SCREEN_FS, geo.fsBig]);
-  const hintOpacity = useTransform(s, T.hint, [1, 0]);
-
-  // commands only ever move forward — a terminal doesn't un-run things
-  const [runTo, setRunTo] = useState(0);
-  useMotionValueEvent(s, "change", (v) => {
-    const n = T.run.filter((t) => v >= t).length;
-    setRunTo((cur) => (n > cur ? n : cur));
-  });
-
-  return (
-    <section id="top" ref={wrapRef} className="relative" style={{ height: `${100 + RUNWAY * 100}svh` }}>
-      {/* the copy: ordinary content that scrolls away */}
-      <div className="absolute inset-x-0 top-0 min-h-[100svh] overflow-hidden">
-        <div ref={colRef} className={`${COLUMN} min-h-[100svh]`}>
-          <HeroCopy
-            {...props}
-            hintOpacity={hintOpacity}
-            slot={<div ref={slotRef} aria-hidden="true" style={{ height: geo.slotH || undefined }} />}
-          />
-        </div>
-      </div>
-
-      {/* the stage: pinned while the device takes over the screen */}
-      <div className="pointer-events-none sticky top-0 z-10 h-[100svh] [overflow-x:clip]">
-        <div className="absolute inset-0 flex items-center justify-center px-[var(--gutter)]">
-          <motion.div
-            initial={props.reduce ? false : { opacity: 0, y: 18 }}
-            animate={props.ready ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.7, delay: 0.14, ease: EASE }}
-          >
-            <motion.div
-              ref={devRef}
-              className="pointer-events-auto origin-center"
-              style={{ y, scale, rotateX, transformPerspective: 1100 }}
-            >
-              <Terminal screenH={screenH} screenFs={screenFs} script={script} runTo={runTo} />
-            </motion.div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-}
-PinnedHero.propTypes = { reduce: PropTypes.bool, ready: PropTypes.bool };
-
-export default function Hero() {
-  const ready = useFontsReady();
-  const reduce = useReducedMotion();
-  const [touch, setTouch] = useState(false);
-
-  useEffect(() => {
-    setTouch(window.matchMedia("(hover: none)").matches);
-  }, []);
-
-  const props = { ready, reduce: Boolean(reduce), touch };
-  return reduce ? <StaticHero {...props} /> : <PinnedHero {...props} />;
 }

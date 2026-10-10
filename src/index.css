@@ -3,73 +3,51 @@
 @tailwind utilities;
 
 /* ─────────────────────────────────────────────────────────────
-   Tokens
-   One accent (vermilion, from the SG. mark), warm paper + warm ink,
-   a sans that states and a serif italic that means.
+   Two colours, one family.
+   Pure white and pure black; GT Standard for everything (Funnel as the fallback
+   while the trial font is missing glyphs or files). Weight 400 almost everywhere — size and
+   space do the work, not boldness.
    ───────────────────────────────────────────────────────────── */
-/* Satoshi — one variable file covers every weight from 300 to 900 */
+
+:root {
+  --fg: #000;
+  --bg: #fff;
+  --gutter: clamp(1.25rem, 2.5vw, 3.5rem);
+  --font-sans: "GT Standard", "Funnel Sans", system-ui, sans-serif;
+  --font-display: "GT Standard", "Funnel Display", system-ui, sans-serif;
+
+  --text-giant: clamp(4rem, 15.4vw, 22rem);
+  --text-d1: clamp(2.9rem, 7.2vw, 8.5rem);
+  --text-d2: clamp(2.2rem, 3.9vw, 4rem);
+  --text-d3: clamp(1.55rem, 2.2vw, 2.25rem);
+  --text-lead: clamp(1.2rem, 1.15vw + 0.6rem, 1.6rem);
+  --text-body: clamp(1rem, 0.25vw + 0.94rem, 1.125rem);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* GT Standard — the trial files live in public/fonts/gt-standard and are git-ignored.
+   Where they are absent (any deploy built from git) the stacks below fall back to Funnel. */
 @font-face {
-  font-family: "Satoshi";
-  src: url("/fonts/satoshi/Satoshi-Variable.woff2") format("woff2");
-  font-weight: 300 900;
+  font-family: "GT Standard";
+  src: url("/fonts/gt-standard/GT-Standard-L-Standard-Regular-Trial.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "GT Standard";
+  src: url("/fonts/gt-standard/GT-Standard-L-Standard-Medium-Trial.woff2") format("woff2");
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
-:root {
-  /* Light-surface palette, as "R G B" channels so Tailwind can apply alpha.
-     Default = warm paper. <html data-paper="white"> swaps in the neutral set below. */
-  --paper: 247 242 237;
-  --paper-raised: 252 249 245;
-  --paper-deep: 239 232 224;
-  --hairline: 226 219 214;
-  --hairline-strong: 212 203 194;
-  --chip-bg: 253 250 246;
-  --chip-border: 230 223 215;
-
-  --night: 20 19 15;
-  --night-raised: 27 26 22;
-  --night-border: 50 49 45;
-
-  --ink: #191613;
-  --accent-color: #c8321f;
-
-  --gutter: clamp(1.25rem, 4vw, 4rem);
-
-  --text-display: clamp(2.6rem, 3.4vw + 1.1rem, 5rem);
-  --text-h1: clamp(2.45rem, min(3.3vw + 1rem, 9.6vh), 4.6rem);
-  --text-h2: clamp(1.9rem, 1.4vw + 1.1rem, 2.6rem);
-  --text-h3: clamp(1.55rem, 1.1vw + 1rem, 2.25rem);
-  --text-quote: clamp(1.9rem, 2.4vw + 0.9rem, 3.4rem);
-  --text-stat-xl: clamp(3.2rem, 4.4vw + 0.9rem, 5.6rem);
-  --text-stat: clamp(2.2rem, 2vw + 1rem, 3rem);
-  --text-lede: clamp(1.2rem, 0.5vw + 1rem, 1.5rem);
-  --text-body: clamp(1rem, 0.2vw + 0.95rem, 1.15rem);
-
-  --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Pure white where it's light, pure black where it's dark. */
-:root[data-paper="white"] {
-  --paper: 255 255 255;
-  --paper-raised: 255 255 255;
-  --paper-deep: 244 244 244;
-  --hairline: 232 232 232;
-  --hairline-strong: 212 212 212;
-  --chip-bg: 255 255 255;
-  --chip-border: 228 228 228;
-
-  --night: 0 0 0;
-  --night-raised: 17 17 17;
-  --night-border: 40 40 40;
-}
-:root[data-paper="white"] .grain { display: none; }
-
 @layer base {
   html {
-    position: relative;
-    background: rgb(var(--paper));
-    color: var(--ink);
+    background: #fff;
+    color: #000;
     color-scheme: light;
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
@@ -80,31 +58,26 @@
 
   body {
     margin: 0;
-    font-family: Satoshi, system-ui, sans-serif;
+    font-family: var(--font-sans);
     font-size: var(--text-body);
-    line-height: 1.58;
-    background: rgb(var(--paper));
+    line-height: 1.5;
+    background: #fff;
     overflow-x: clip;
   }
 
   h1, h2, h3, h4 {
-    font-family: Satoshi, system-ui, sans-serif;
-    font-weight: 700;
-    text-wrap: balance;
+    font-family: var(--font-display);
+    font-weight: 400;
   }
 
   p { text-wrap: pretty; }
-  .text-center p, p.text-center { text-wrap: balance; }
 
-  ::selection {
-    background: #f6ddd5;
-    color: #191613;
-  }
+  ::selection { background: #000; color: #fff; }
+  .on-dark ::selection { background: #fff; color: #000; }
 
   :focus-visible {
-    outline: 2px solid var(--accent-color);
-    outline-offset: 3px;
-    border-radius: 6px;
+    outline: 1px solid currentColor;
+    outline-offset: 4px;
   }
 
   img { user-select: none; -webkit-user-drag: none; }
@@ -116,237 +89,175 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
 
+/* No visible scrollbars, in any browser, on any element. Scrolling itself is untouched:
+   wheel, trackpad, touch and keyboard all still work. */
+html,
+body,
+* {
+  scrollbar-width: none; /* Firefox; Chrome & Edge 121+ */
+  -ms-overflow-style: none; /* legacy Edge / IE */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none; /* Safari, older Chrome & Edge, Opera, Brave */
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
 @layer components {
-  /* Layout */
-  .shell {
-    width: 100%;
-    max-width: 80rem;
-    margin-inline: auto;
-    padding-inline: var(--gutter);
+  .on-dark {
+    --fg: #fff;
+    --bg: #000;
+    background: #000;
+    color: #fff;
   }
 
-  /* The accent word: the site's voice */
-  .accent {
-    font-family: "Instrument Serif", Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    font-synthesis: none;
-    letter-spacing: -0.005em;
-    font-size: 1.07em;
+  .px-gutter { padding-inline: var(--gutter); }
+
+  /* Nav boxes: the same colour as the page beneath, so they only show over images */
+  .nav-box {
+    display: inline-flex;
+    align-items: flex-start;
+    padding: 0.3em 0.5em 0.34em;
+    border-radius: 3px;
+    background: #fff;
+    color: #000;
+    transition: background-color 400ms var(--ease-out), color 400ms var(--ease-out);
+  }
+  .nav-box[data-tone="dark"] {
+    background: #000;
+    color: #fff;
+  }
+
+  /* [ Label ] — the bracketed section marker */
+  .label {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.3;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+
+  /* Superscript count: Work⁽⁴⁾ */
+  .count {
+    font-size: 0.62em;
+    vertical-align: super;
     line-height: 0;
-    color: var(--accent-color);
-    padding-right: 0.04em;
-  }
-  .accent-quiet { color: inherit; }
-
-  .serif-italic {
-    font-family: "Instrument Serif", Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    font-synthesis: none;
-  }
-
-  .eyebrow {
-    font-family: Satoshi, system-ui, sans-serif;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #6c6762;
-    line-height: 1.2;
-  }
-  .night .eyebrow { color: #8b8985; }
-
-  .mono-meta {
-    font-family: Satoshi, system-ui, sans-serif;
-    font-size: 0.78rem;
-    letter-spacing: 0.02em;
+    margin-left: 0.15em;
     font-variant-numeric: tabular-nums;
   }
 
-  /* Buttons — colour only, never bounce */
-  .btn {
+  /* First-line indent, the way editorial paragraphs open */
+  .indent { text-indent: 3.5em; }
+
+  /* Hover roll: the label slides up and an identical copy follows it in */
+  .roll {
+    position: relative;
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    height: 2.75rem;
-    padding-inline: 1.3rem;
-    border-radius: 9999px;
-    font-family: Satoshi, system-ui, sans-serif;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    letter-spacing: -0.005em;
-    white-space: nowrap;
-    border: 1.5px solid transparent;
-    transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease;
-    -webkit-tap-highlight-color: transparent;
+    overflow: hidden;
+    vertical-align: top;
   }
-  .btn:active { transform: translateY(1px); }
-  .btn-lg { height: 3.6rem; padding-inline: 2.1rem; font-size: 1rem; }
-
-  .btn-primary { background: #1a1714; color: #f7f2ed; }
-  .btn-primary:hover { background: #c8321f; }
-
-  .btn-secondary { border-color: #25231d; color: #191613; background: transparent; }
-  .btn-secondary:hover { background: #1a1714; color: #f7f2ed; border-color: #1a1714; }
-
-  .btn-light { background: #f2efe6; color: #191613; }
-  .btn-light:hover { background: #ffffff; }
-
-  .btn-ghost-night { border-width: 1px; border-color: #6d6c68; color: #f6f4f0; font-weight: 400; }
-  .btn-ghost-night:hover { border-color: #f6f4f0; background: rgba(246, 244, 240, 0.04); }
-
-  .btn .arrow { font-size: 0.85em; transition: transform 250ms var(--ease-emphasized); }
-  .btn:hover .arrow { transform: translate(1px, -1px); }
-
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    height: 1.9rem;
-    padding-inline: 0.85rem;
-    border-radius: 9999px;
-    background: rgb(var(--chip-bg));
-    border: 1px solid rgb(var(--chip-border));
-    font-size: 0.875rem;
-    color: #4c4846;
-    white-space: nowrap;
+  .roll > span {
+    display: inline-block;
+    transition: transform 650ms var(--ease-out);
   }
-  .night .tag {
-    background: rgba(246, 244, 240, 0.04);
-    border-color: #32312d;
-    color: #a5a29e;
+  .roll > span::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 100%;
+  }
+  a:hover .roll > span,
+  button:hover .roll > span,
+  .roll-trigger:hover .roll > span { transform: translateY(-100%); }
+
+  /* Underline that draws in from the left and leaves to the right */
+  .line-link {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    transition: background-size 600ms var(--ease-out);
+  }
+  .line-link:hover {
+    background-size: 100% 1px;
+    background-position: 0 100%;
+  }
+  .line-link-on {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
   }
 
-  /* Water-droplet pill: no border — a clear convex bead of glass sitting on the page.
-     Light comes from above: bright rim + specular on top, a focused caustic glow inside
-     the bottom edge, and a soft contact shadow underneath. */
-  .pill-drop {
+  /* Square button: hairline frame, ink rises from the bottom on hover */
+  .btn-sq {
     position: relative;
     isolation: isolate;
     display: inline-flex;
     align-items: center;
-    border-radius: 9999px;
+    gap: 0.6rem;
+    height: 2.875rem;
+    padding-inline: 1.15rem;
+    border: 1px solid var(--fg);
+    color: var(--fg);
+    font-size: 0.9375rem;
     white-space: nowrap;
-    letter-spacing: -0.01em;
-    background:
-      radial-gradient(120% 90% at 50% 115%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 55%),
-      linear-gradient(180deg, rgba(250, 250, 252, 0.72) 0%, rgba(238, 239, 243, 0.62) 100%);
-    -webkit-backdrop-filter: blur(5px) saturate(1.6);
-    backdrop-filter: blur(5px) saturate(1.6);
-    box-shadow:
-      inset 0 1px 0.5px rgba(255, 255, 255, 1),
-      inset 0 0 0 0.5px rgba(255, 255, 255, 0.7),
-      inset 0 -1.5px 2px rgba(255, 255, 255, 0.9),
-      inset 0 -6px 10px -6px rgba(20, 30, 60, 0.1),
-      inset 0 5px 8px -6px rgba(20, 30, 60, 0.12),
-      0 1px 1.5px rgba(10, 15, 30, 0.07),
-      0 5px 12px -5px rgba(10, 15, 30, 0.16),
-      0 14px 24px -16px rgba(10, 15, 30, 0.2);
-    transition: transform 400ms var(--ease-emphasized), box-shadow 400ms var(--ease-emphasized);
+    overflow: hidden;
+    transition: color 500ms var(--ease-out);
   }
-  /* specular highlight — the bright crescent a droplet catches on top */
-  .pill-drop::before {
+  .btn-sq::before {
     content: "";
     position: absolute;
+    inset: 0;
     z-index: -1;
-    left: 12%;
-    right: 12%;
-    top: 2px;
-    height: 46%;
-    border-radius: 9999px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 100%);
-    pointer-events: none;
+    background: var(--fg);
+    transform: scaleY(0);
+    transform-origin: 50% 100%;
+    transition: transform 500ms var(--ease-out);
   }
-  /* tiny glint, off-centre, sells the curvature */
-  .pill-drop::after {
-    content: "";
-    position: absolute;
-    left: 14%;
-    top: 22%;
-    width: 5px;
-    height: 3px;
-    border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.95);
-    filter: blur(0.4px);
-    pointer-events: none;
-  }
-  .pill-drop:hover {
-    transform: translateY(-1px);
-    box-shadow:
-      inset 0 1px 0.5px rgba(255, 255, 255, 1),
-      inset 0 0 0 0.5px rgba(255, 255, 255, 0.7),
-      inset 0 -1.5px 2px rgba(255, 255, 255, 0.9),
-      inset 0 -6px 10px -6px rgba(20, 30, 60, 0.1),
-      inset 0 5px 8px -6px rgba(20, 30, 60, 0.12),
-      0 1px 1.5px rgba(10, 15, 30, 0.07),
-      0 8px 16px -6px rgba(10, 15, 30, 0.2),
-      0 18px 30px -18px rgba(10, 15, 30, 0.24);
+  .btn-sq:hover { color: var(--bg); }
+  .btn-sq:hover::before { transform: scaleY(1); }
+  .btn-sq .arrow { transition: transform 500ms var(--ease-out); }
+  .btn-sq:hover .arrow { transform: translateX(3px); }
+  .btn-sq:disabled { opacity: 0.5; pointer-events: none; }
+
+  /* Small outlined chip with square corners */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    height: 2.15rem;
+    padding-inline: 0.85rem;
+    border: 1px solid currentColor;
+    font-size: 0.875rem;
+    white-space: nowrap;
   }
 
-  .link-underline {
-    background-image: linear-gradient(currentColor, currentColor);
-    background-size: 0% 1px;
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    transition: background-size 400ms var(--ease-emphasized), color 250ms ease;
-    padding-bottom: 2px;
+  /* Word mask for rise-in text. The padding keeps descenders from being clipped. */
+  .mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
   }
-  .link-underline:hover { background-size: 100% 1px; }
 }
 
 @layer utilities {
-  .night {
-    --accent-color: #ff7a63;
-    background-color: rgb(var(--night));
-    color: #f6f4f0;
-  }
-
-  .edge-fade-x {
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
-  }
-
-  .scanlines {
-    background-image: repeating-linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.035) 0px,
-      rgba(255, 255, 255, 0.035) 1px,
-      transparent 1px,
-      transparent 3px
-    );
-  }
-
   .tabular { font-variant-numeric: tabular-nums; }
+  .text-balance { text-wrap: balance; }
 }
 
-/* Paper grain — rasterised once, composited cheaply */
-.grain {
-  position: fixed;
-  inset: -50%;
-  z-index: 70;
-  pointer-events: none;
-  opacity: 0.045;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.07 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
-}
+@keyframes marquee { to { transform: translate3d(-50%, 0, 0); } }
+.marquee-track { animation: marquee 38s linear infinite; }
 
-@keyframes blink {
+@keyframes caret {
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
 }
-.blink { animation: blink 1.05s steps(1, end) infinite; }
-
-@keyframes marquee { to { transform: translate3d(-50%, 0, 0); } }
-
-@keyframes led-pulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 6px 1px rgba(255, 59, 47, 0.55); }
-  50% { opacity: 0.55; box-shadow: 0 0 2px 0 rgba(255, 59, 47, 0.3); }
-}
-
-@keyframes led-pulse-green {
-  0%, 100% { opacity: 1; box-shadow: 0 0 6px 1px rgba(139, 238, 166, 0.6); }
-  50% { opacity: 0.5; box-shadow: 0 0 2px 0 rgba(139, 238, 166, 0.25); }
-}
+.caret { animation: caret 1.05s steps(1, end) infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -354,5 +265,4 @@ html.lenis, html.lenis body { height: auto; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .blink { animation: none; }
 }

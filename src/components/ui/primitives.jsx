@@ -1,52 +1,110 @@
-import { useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { animate, motion, useInView, useReducedMotion } from "framer-motion";
+import { cn } from "../../lib/utils";
 
-const EASE = [0.16, 1, 0.3, 1];
+export const EASE = [0.16, 1, 0.3, 1];
+export const EASE_IN_OUT = [0.76, 0, 0.24, 1];
 
-/** One-shot fade-up as the element enters the viewport. */
-export function Reveal({ children, delay = 0, y = 20, className, as = "div", amount = 0.15, ...rest }) {
+/**
+ * Text that rises into place word by word, each word behind its own mask.
+ * `text` is a string, or an array of strings for explicit lines.
+ * Without `play` it triggers on scroll-into-view; with `play` it waits for that flag.
+ */
+export function RiseText({
+  text,
+  as = "span",
+  className,
+  lineClassName,
+  delay = 0,
+  stagger = 0.035,
+  duration = 1.15,
+  play,
+  amount = 0.3,
+}) {
+  const reduce = useReducedMotion();
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount, margin: "0px 0px -8% 0px" });
+  const go = play === undefined ? inView : play;
+  const Tag = as;
+  const lines = Array.isArray(text) ? text : [text];
+  let i = 0;
+
+  const word = (w, key) => (
+    <span className="mask" key={key}>
+      <motion.span
+        className="inline-block will-change-transform"
+        initial={reduce ? false : { y: "110%" }}
+        animate={go ? { y: "0%" } : undefined}
+        transition={{ duration, ease: EASE, delay: delay + i++ * stagger }}
+      >
+        {w}
+      </motion.span>
+    </span>
+  );
+
+  return (
+    <Tag ref={ref} className={className}>
+      <span className="sr-only">{lines.join(" ")}</span>
+      <span aria-hidden="true">
+        {lines.map((line, li) => {
+          const words = line.split(" ");
+          const content = words.map((w, wi) => (
+            <Fragment key={wi}>
+              {word(w, wi)}
+              {wi < words.length - 1 && " "}
+            </Fragment>
+          ));
+          return lines.length > 1 ? (
+            <span key={li} className={cn("block", lineClassName)}>
+              {content}
+            </span>
+          ) : (
+            <Fragment key={li}>{content}</Fragment>
+          );
+        })}
+      </span>
+    </Tag>
+  );
+}
+
+/** One-shot fade-up for blocks. */
+export function FadeIn({ children, className, delay = 0, y = 24, as = "div", amount = 0.2, play, ...rest }) {
   const reduce = useReducedMotion();
   const Tag = motion[as] || motion.div;
+  const show = { opacity: 1, y: 0 };
   return (
     <Tag
       className={className}
       initial={reduce ? false : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount, margin: "0px 0px -8% 0px" }}
-      transition={{ duration: 0.6, delay, ease: EASE }}
+      {...(play === undefined
+        ? { whileInView: show, viewport: { once: true, amount, margin: "0px 0px -8% 0px" } }
+        : { animate: play ? show : undefined })}
+      transition={{ duration: 1, delay, ease: EASE }}
       {...rest}
     >
       {children}
     </Tag>
   );
 }
-Reveal.propTypes = {
-  children: PropTypes.node,
-  delay: PropTypes.number,
-  y: PropTypes.number,
-  className: PropTypes.string,
-  as: PropTypes.string,
-  amount: PropTypes.number,
-};
 
-/** Renders ["plain ", "accent", " tail"] — the site's one typographic device. */
-export function AccentText({ parts, quiet = false }) {
-  const [pre, acc, post] = parts;
+/** [ Label ] */
+export function Label({ children, className, as: Tag = "p" }) {
+  return <Tag className={cn("label", className)}>[ {children} ]</Tag>;
+}
+
+/** Text that rolls up to an identical copy on hover of its link or button. */
+export function Roll({ children, className }) {
   return (
-    <>
-      {pre}
-      <em className={quiet ? "accent accent-quiet" : "accent"}>{acc}</em>
-      {post}
-    </>
+    <span className={cn("roll", className)}>
+      <span data-text={children}>{children}</span>
+    </span>
   );
 }
-AccentText.propTypes = { parts: PropTypes.arrayOf(PropTypes.string).isRequired, quiet: PropTypes.bool };
 
 /** Counts from 0 to `to` once it's in view. The final value is always in the accessible name. */
-export function CountUp({ to, duration = 1.15, format = (n) => n.toLocaleString("en-IN"), className }) {
+export function CountUp({ to, duration = 1.6, format = (n) => n.toLocaleString("en-IN"), className }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.5 });
+  const inView = useInView(ref, { once: true, amount: 0.6 });
   const reduce = useReducedMotion();
   const [value, setValue] = useState(reduce ? to : 0);
 
@@ -65,54 +123,47 @@ export function CountUp({ to, duration = 1.15, format = (n) => n.toLocaleString(
   }, [inView, to, duration, reduce]);
 
   return (
-    <span ref={ref} className={className} aria-label={format(to)}>
+    <span ref={ref} className={className}>
+      <span className="sr-only">{format(to)}</span>
       <span aria-hidden="true">{format(value)}</span>
     </span>
   );
 }
-CountUp.propTypes = {
-  to: PropTypes.number.isRequired,
-  duration: PropTypes.number,
-  format: PropTypes.func,
-  className: PropTypes.string,
-};
 
-/* ── Icons: 1.5px strokes, drawn to sit on the text baseline ── */
-const Svg = ({ children, className = "h-[0.95em] w-[0.95em]", ...p }) => (
+/* ── Icons: hairline strokes, sized to the text ── */
+const Svg = ({ children, className = "h-[0.85em] w-[0.85em]", ...p }) => (
   <svg
     viewBox="0 0 16 16"
     fill="none"
     stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
+    strokeWidth="1.25"
+    strokeLinecap="square"
     aria-hidden="true"
+    focusable="false"
     className={className}
     {...p}
   >
     {children}
   </svg>
 );
-Svg.propTypes = { children: PropTypes.node, className: PropTypes.string };
 
-export const ArrowUpRight = (p) => (
-  <Svg {...p}>
-    <path d="M5 11 11 5M6 5h5v5" />
-  </Svg>
-);
 export const ArrowRight = (p) => (
   <Svg {...p}>
-    <path d="M3 8h10M9 4l4 4-4 4" />
+    <path d="M1.5 8h12.5M9 3l5 5-5 5" />
+  </Svg>
+);
+export const ArrowUpRight = (p) => (
+  <Svg {...p}>
+    <path d="M3.5 12.5 12.5 3.5M5 3.5h7.5V11" />
   </Svg>
 );
 export const ArrowDown = (p) => (
   <Svg {...p}>
-    <path d="M8 3v10M4 9l4 4 4-4" />
+    <path d="M8 1.5V14M3 9l5 5 5-5" />
   </Svg>
 );
-export const Play = ({ className = "h-[0.8em] w-[0.8em]" }) => (
-  <svg viewBox="0 0 12 12" aria-hidden="true" className={className}>
-    <path d="M2.5 1.6v8.8L10.2 6z" fill="currentColor" />
-  </svg>
+export const ArrowUp = (p) => (
+  <Svg {...p}>
+    <path d="M8 14.5V2M3 7l5-5 5 5" />
+  </Svg>
 );
-Play.propTypes = { className: PropTypes.string };
