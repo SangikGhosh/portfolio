@@ -26,16 +26,16 @@ export const socials = [
 
 export const navLinks = [
   { label: "Work", target: "work", count: 4 },
-  { label: "Journey", target: "journey", count: 5 },
+  { label: "Journey", target: "journey", count: 7 },
   { label: "About", target: "about" },
   { label: "Contact", target: "contact" },
 ];
 
 export const hero = {
   // three short lines, centred under the name
-  lines: ["Jr. AI engineer and backend", "developer — based in India", "[ Kolkata ]"],
+  lines: ["Jr. AI engineer and backend", "developer based in India", "[ Kolkata ]"],
   approach:
-    "Calm, dependable systems — agents that retrieve and reason, and the services that keep them honest.",
+    "Calm, dependable systems: agents that retrieve and reason, and the services that keep them honest.",
 };
 
 /* Pictures for the window inside the name (Cloudinary originals; resized on delivery). */
@@ -59,89 +59,181 @@ export const heroImages = [
 ];
 
 export const statement =
-  "I build AI systems that retrieve, reason and act on real data — and the calm, dependable services underneath them. I started in frontend, so I still care how it all feels.";
+  "I build AI systems that retrieve, reason and act on real data, and the calm, dependable services underneath them. I started in frontend, so I still care how it all feels.";
 
 export const stack = ["LLMs & RAG", "Python", "FastAPI", "Spring Boot", "Flutter", "Java"];
 
-/* `cover` picks the typographic cover drawn for each project (see components/work/covers.jsx). */
+/* `cover` picks the typographic cover drawn for each project (see components/work/covers.jsx).
+   `building: true` marks work in progress: shown in the grid, but it has no project page yet. */
 export const projects = [
   {
-    id: "chatbuzz",
-    name: "ChatBuzz",
-    year: "2024",
-    role: "Lead developer",
-    kind: "Full stack",
-    tags: ["Full stack", "Real-time", "WebSockets"],
-    title: "A chat app where messages land instantly.",
-    body: "A real-time messaging platform on React, Express, Node.js and MongoDB. Token-based auth, socket-streamed messages and chat rooms that stay in sync on every device.",
-    facts: [
-      { value: "Real-time", label: "socket-streamed messaging" },
-      { value: "Multi-room", label: "in sync across devices" },
+    id: "lectra",
+    name: "Lectra",
+    year: "2026",
+    kind: "In progress",
+    title: "A digital classroom for coaching batches.",
+    building: true,
+    cover: "image",
+    image: {
+      src: "https://res.cloudinary.com/dq2dnhli5/image/upload/f_auto,q_auto,w_1600/portfolio/lectra-poster",
+      alt: "Lectra, a classroom app in development: its splash screen on a phone over a peach, lavender and pink gradient",
+    },
+  },
+  {
+    id: "greenroute",
+    name: "GreenRoute",
+    year: "2026",
+    role: "Flutter app lead",
+    kind: "Mobile app",
+    tags: ["Flutter", "AI scanning", "Hackathon"],
+    title: "Photograph your waste. Get paid to sort it.",
+    body: "A community waste and circular-economy platform built at IEMHACKS 4.0 with a team of four, for Howrah and North 24 Parganas. A vision model identifies, prices and bins every item in one photo; collectors run road-optimised pickup routes; recyclers buy sorted lots from a live market. I built the Flutter app, all three roles in one codebase, on our Spring Boot API.",
+    flow: [
+      {
+        step: "Scan",
+        text: "A citizen photographs their waste. YOLOv8 finds every object and returns material, bin colour, price range, carbon saved and points.",
+      },
+      {
+        step: "Hand over",
+        text: "Request a doorstep pickup, or drop it at the nearest collection point, ranked by real road time and worth more points.",
+      },
+      {
+        step: "Collect",
+        text: "Collectors claim jobs first-come, drive stops ordered on real roads, then weigh and pay. Points are credited only on completion.",
+      },
+      {
+        step: "Sell",
+        text: "Recyclers buy sorted, weighed lots straight from households, with an atomic purchase and a full wallet ledger.",
+      },
     ],
-    stack: ["React", "Express", "Node.js", "MongoDB", "Socket.io"],
-    links: [{ label: "View source", href: "https://github.com/SangikGhosh/realtime-chat-app" }],
-    cover: "chat",
+    facts: [
+      { value: "3 roles", label: "citizen, collector and recycler in one app" },
+      { value: "16", label: "waste types identified and priced" },
+      { value: "45", label: "REST endpoints behind it" },
+    ],
+    stack: ["Flutter", "Riverpod", "GoRouter", "flutter_map", "Spring Boot", "YOLOv8"],
+    links: [
+      { label: "Live site", href: "https://www.greenroutehere.tech" },
+      { label: "View source", href: "https://github.com/SangikGhosh/iemhacksHackathon" },
+    ],
+    cover: "video",
+    video: {
+      src: "https://res.cloudinary.com/dq2dnhli5/video/upload/q_auto,vc_h264/portfolio/greenroute-demo-v2.mp4",
+      poster: "https://res.cloudinary.com/dq2dnhli5/video/upload/so_14.5,q_auto,w_1600/portfolio/greenroute-demo-v2.jpg",
+      label: "GreenRoute app walkthrough: scanning waste, a collector's route, and the recycler market",
+    },
+  },
+  {
+    id: "relay",
+    name: "Relay",
+    year: "2026",
+    role: "Solo full-stack developer",
+    kind: "Real-time chat",
+    tags: ["Real-time", "Spring Boot", "WebSockets"],
+    title: "Rooms where messages land the moment they’re sent.",
+    body: "A real-time team chat: rooms with invite codes, live typing, instant delivery on every device, and owner controls. A Spring Boot API with a Netty Socket.IO server underneath, a React and TypeScript client on top. People live in PostgreSQL, messages in MongoDB, sign-up codes in Redis.",
+    flow: [
+      {
+        step: "Sign up",
+        text: "Email and password confirmed with a 4-digit code held in Redis for ten minutes, or Google sign-in. Every session is a signed JWT.",
+      },
+      {
+        step: "Make a room",
+        text: "Each room gets an 8-character invite code and a QR. Teammates join with the code and see the full history.",
+      },
+      {
+        step: "Talk live",
+        text: "A Netty Socket.IO server, keyed by invite code, pushes messages and typing events to everyone in the room the instant they happen.",
+      },
+      {
+        step: "Stay in control",
+        text: "Owners see who’s in, remove members, or switch on announcement mode so every member’s composer locks at once.",
+      },
+    ],
+    facts: [
+      { value: "Live", label: "messages, typing and permissions over sockets" },
+      { value: "2 stores", label: "PostgreSQL for people, MongoDB for messages" },
+      { value: "JWT", label: "with Google OAuth and email OTP" },
+    ],
+    stack: ["React 19", "TypeScript", "Tailwind CSS 4", "Spring Boot", "netty-socketio", "Redis", "PostgreSQL", "MongoDB"],
+    links: [
+      { label: "Frontend source", href: "https://github.com/SangikGhosh/webchatapp-frontend" },
+      { label: "Backend source", href: "https://github.com/SangikGhosh/WebChatApp-Backend" },
+    ],
+    cover: "video",
+    video: {
+      src: "https://res.cloudinary.com/dq2dnhli5/video/upload/q_auto,vc_h264/portfolio/relay-demo-v3.mp4",
+      poster: "https://res.cloudinary.com/dq2dnhli5/video/upload/so_26,q_auto,w_1600/portfolio/relay-demo-v3.jpg",
+      label: "Relay walkthrough: signing in, switching rooms, live chat between desktop and phone, and room controls",
+    },
   },
   {
     id: "filehider",
     name: "FileHider",
     year: "2024",
-    role: "Backend architecture",
-    kind: "Security",
-    tags: ["Java", "Security", "Cryptography"],
-    title: "Keeping private files private, by design.",
-    body: "A Java service that encrypts and conceals sensitive local files, keeping them out of reach of anyone unauthorised — and asks for a one-time password before anything unlocks.",
-    facts: [
-      { value: "OTP", label: "multi-factor unlock" },
-      { value: "Encrypted", label: "files concealed at rest" },
+    role: "Solo developer",
+    kind: "Backend",
+    tags: ["Java", "JDBC", "Email OTP"],
+    title: "Private files, behind a one-time password.",
+    body: "A Java command-line service that hides files by taking them off the disk entirely and holding them in MySQL. Every sign-up and every login is confirmed with a one-time code sent by email, and a file only comes back to the exact path it left when its owner asks for it.",
+    flow: [
+      {
+        step: "Sign up",
+        text: "Name, email and password. The account is saved only after the 4-digit code sent to that inbox is typed back in.",
+      },
+      {
+        step: "Log in",
+        text: "The password is checked against MySQL, then a fresh one-time code goes out over Gmail SMTP. Two checks before anything opens.",
+      },
+      {
+        step: "Hide",
+        text: "Point it at a file: its contents, name, path and owner are written to the database, and the original is deleted from disk.",
+      },
+      {
+        step: "Restore",
+        text: "Pick one of your own files by ID. It is written back to where it came from and its database row is removed.",
+      },
     ],
-    stack: ["Java", "Cryptography", "OTP verification", "JDBC"],
+    facts: [
+      { value: "2-step", label: "password, then email OTP" },
+      { value: "Off-disk", label: "files held in MySQL until restored" },
+      { value: "4 layers", label: "views, services, DAOs, JDBC" },
+    ],
+    stack: ["Java 17", "JDBC", "MySQL", "JavaMail (SMTP)", "Maven"],
     links: [{ label: "View source", href: "https://github.com/SangikGhosh/FileHiderService" }],
     cover: "vault",
   },
-  {
-    id: "flux",
-    name: "FLUX.1 UI",
-    year: "2024",
-    role: "Frontend engineer",
-    kind: "AI interface",
-    tags: ["AI", "Interface", "Team project"],
-    title: "Turning a single sentence into an image.",
-    body: "A fast interface for generating detailed imagery from natural-language prompts — tuned for speed, variety of output and fluid, stateful interaction.",
-    facts: [
-      { value: "Text → image", label: "natural-language generation" },
-      { value: "Stateful", label: "fluid, uninterrupted flow" },
-    ],
-    stack: ["React", "Tailwind CSS", "AI API pipeline"],
-    links: [{ label: "Team repository", href: "https://github.com/sandipsaha2005/final-round-project" }],
-    cover: "prompt",
-  },
-  {
-    id: "mlbb",
-    name: "MLBB Portal",
-    year: "2024",
-    role: "UI / UX developer",
-    kind: "Community",
-    tags: ["Web", "Community", "Interactive UI"],
-    title: "A home base for a competitive gaming crowd.",
-    body: "A community portal for Mobile Legends players: hero metrics, tactical guides, competitive match updates and multiplayer statistics, all in one quick-to-scan place.",
-    facts: [
-      { value: "Live", label: "match & multiplayer stats" },
-      { value: "Guides", label: "tactics for every hero" },
-    ],
-    stack: ["React", "UI design", "Interactive UI"],
-    links: [{ label: "View source", href: "https://github.com/SangikGhosh/MLBB" }],
-    cover: "arena",
-  },
 ];
 
+/* Projects with their own page, in grid order. */
+export const caseProjects = projects.filter((p) => !p.building);
+
+/* `href` makes the row a link; `result` is the line it earned. */
 export const archive = [
   {
-    year: "2023",
+    year: "2024",
     title: "TechHub Club Platform",
     note: "Community portal for workshops, challenges and open-source collaboration",
     stack: "React · Tailwind CSS",
     status: "Private",
+  },
+  {
+    year: "2023",
+    title: "Render.com, reimagined",
+    note: "A ground-up redesign of Render’s cloud-platform site, built as a hackathon team",
+    result: "Round 3 · Top 10",
+    stack: "React · Tailwind CSS",
+    status: "Live",
+    href: "https://reimagin-eight.vercel.app/",
+  },
+  {
+    year: "2023",
+    title: "MLBB Portal",
+    note: "Community portal for Mobile Legends players, with hero metrics, guides and match updates",
+    result: "Qualified for round 3 · Top 25 of 650+",
+    stack: "React · Interactive UI",
+    status: "Live",
+    href: "https://mlbb-chi.vercel.app/",
   },
   {
     year: "2023",
@@ -190,12 +282,12 @@ export const about = {
   chips: ["AI engineering", "Backend", "Mobile", "Frontend roots"],
   paragraphs: [
     "Day to day I build agentic LLM systems and retrieval pipelines, and the FastAPI and Spring Boot services that keep them dependable. I also ship Flutter apps.",
-    "I started out as a frontend engineer, which is why I still care how things feel. From multi-factor encryption in Java to retrieval pipelines, I try to write code that is readable, testable and aimed at a real problem — not a demo.",
+    "I started out as a frontend engineer, which is why I still care how things feel. From multi-factor encryption in Java to retrieval pipelines, I try to write code that is readable, testable and aimed at a real problem, not a demo.",
   ],
   facts: [
     { k: "Based in", v: "Kolkata, India · IST" },
-    { k: "Now", v: "Jr. AI Engineer — agents, RAG, LLMs" },
-    { k: "Before", v: "Frontend engineer · Java backend intern" },
+    { k: "Now", v: "Junior AI Engineer at Opacity AI" },
+    { k: "Studying", v: "B.Tech, CSE (AI & ML), Heritage Institute of Technology" },
     { k: "Status", v: "Open to full-time roles & freelance" },
   ],
 };
@@ -209,27 +301,27 @@ export const capabilities = [
   },
   {
     title: "Backend",
-    summary: "APIs that stay calm under load — Python where AI lives, Java where nothing may fall over.",
+    summary: "APIs that stay calm under load. Python where AI lives, Java where nothing may fall over.",
     tools: ["Spring Boot", "FastAPI", "REST", "WebSockets", "Spring Security", "JWT", "JPA"],
   },
   {
     title: "Mobile",
-    summary: "Cross-platform apps in Flutter — where the AI features meet people’s hands.",
+    summary: "Cross-platform apps in Flutter, where the AI features meet people’s hands.",
     tools: ["Flutter", "Riverpod", "BLoC", "Dio", "GoRouter", "Hive", "Firebase"],
   },
   {
     title: "Data",
-    summary: "Schemas designed first — relational by default, documents when the shape is loose.",
+    summary: "Schemas designed first. Relational by default, documents when the shape is loose.",
     tools: ["PostgreSQL", "Supabase", "Neon", "MongoDB", "Redis"],
   },
   {
     title: "Tools & cloud",
-    summary: "From laptop to production — containers, cloud and the edge.",
+    summary: "From laptop to production: containers, cloud and the edge.",
     tools: ["Git", "Docker", "OCI", "Cloudflare", "Cloudinary"],
   },
   {
     title: "Frontend",
-    summary: "Where I started — interfaces that feel considered, this one included.",
+    summary: "Where I started. Interfaces that feel considered, this one included.",
     tools: ["React", "Tailwind CSS", "Vite", "Responsive UI"],
   },
 ];
@@ -239,36 +331,56 @@ export const languages = ["Python", "Java", "Dart", "SQL", "JavaScript", "C"];
 export const journey = [
   {
     when: "Now",
-    title: "Jr. AI Engineer — agents, RAG and LLM systems",
-    body: "Building agentic workflows and retrieval pipelines on FastAPI and Spring Boot, shipping Flutter apps, and keeping up daily DSA on LeetCode.",
+    title: "Junior AI Engineer, Opacity AI",
+    body: "Working on AI automation, backend engineering, agentic workflows, RAG and LLM-powered applications. I started on the frontend team before moving into AI engineering.",
     live: true,
   },
   {
+    when: "2025",
+    title: "B.Tech in Computer Science (AI & ML)",
+    body: "Joined Heritage Institute of Technology, Kolkata, for a B.Tech in Computer Science and Engineering, specialising in Artificial Intelligence and Machine Learning.",
+    photo: "btech",
+  },
+  {
+    when: "2025",
+    title: "Diploma in Computer Science & Technology",
+    body: "Completed my diploma at Behala Government Polytechnic after three years of programming, software development, databases and computer science fundamentals.",
+    photo: "farewell",
+  },
+  {
     when: "2024",
-    title: "National finalist, Sheriyans Coding School Hackathon",
-    body: "Cleared rounds one to three against teams from across India, shipping full-stack prototypes against the clock.",
-    photo: "hackathon",
+    title: "Learning, building and growing",
+    body: "A full year of diploma life, friends and hands-on work. Explored Spring Boot and FastAPI and built several projects, learning to turn ideas into real applications.",
+    photo: "friends",
   },
   {
     when: "2023",
-    title: "Java backend intern, Surtle Security",
-    body: "Built server-side modules in Java, picked up production security practice and shipped inside a live agile team.",
+    title: "National finalist, Sheryians Coding School Hackathon",
+    body: "Reached the national finals as part of a finalist team, competing with developers from across India and building against tight deadlines.",
+    photo: "hackathon",
   },
   {
     when: "2022",
-    title: "Diploma in Computer Science & Technology",
-    body: "Behala Government Polytechnic — where self-taught curiosity met operating systems, object-oriented design and relational databases.",
-    photo: "classroom",
+    title: "Started my diploma",
+    body: "Enrolled at Behala Government Polytechnic to study Computer Science and Technology, the start of my formal technical education.",
+    photo: "diploma",
   },
   {
     when: "Before",
-    title: "Where it started",
-    body: "Finished school, moved from Delhi to Kolkata and started teaching myself Java and the web, one small project at a time.",
+    title: "Where it all started",
+    body: "Finished school at Government Sponsored Multipurpose School for Boys, Taki House, where I first got curious about computers and how software works.",
+    photo: "classroom",
   },
 ];
 
 export const contact = {
-  marquee: ["Let’s talk", "Have a role or an idea? Good. That’s what the first message is for."],
+  // Each pair scrolls past once per loop: a big line, then the small note beside it.
+  marquee: [
+    ["Let’s talk", "Have a role or an idea? Good. That’s what the first message is for."],
+    ["Hiring?", "Open to full-time roles in AI and backend engineering."],
+    ["Have a project?", "Agents, APIs or a Flutter app. Freelance work is welcome."],
+    ["Say hello", "Questions, feedback or just a good idea. I read every note."],
+  ],
   open: "I’m always happy to meet new people, take on interesting problems and explore new ideas. Feel free to",
 };
 

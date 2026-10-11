@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { useMediaQuery } from "../lib/hooks";
 
-const INTERACTIVE = "a, button, [role='button'], summary, select, label";
+// Anything clickable, plus elements that opt in with data-cursor-hover (e.g. the tool pills).
+const INTERACTIVE = "a, button, [role='button'], summary, select, label, [data-cursor-hover]";
 const FOLLOW = { stiffness: 520, damping: 42, mass: 0.45 };
 
 /*

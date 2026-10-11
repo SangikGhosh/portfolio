@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from "react";
-import { animate, motion, useInView, useReducedMotion } from "framer-motion";
+import { animate, motion, useInView, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { cn } from "../../lib/utils";
 
 export const EASE = [0.16, 1, 0.3, 1];
@@ -98,6 +98,40 @@ export function Roll({ children, className }) {
     <span className={cn("roll", className)}>
       <span data-text={children}>{children}</span>
     </span>
+  );
+}
+
+const MAGNET = { stiffness: 260, damping: 18, mass: 0.6 };
+
+/**
+ * Leans toward the pointer while it is over the element, then springs home.
+ * `strength` is the share of the pointer's offset it follows; `max` caps the travel in px.
+ * Mouse only, and still for anyone who prefers reduced motion.
+ */
+export function Magnetic({ as = "div", strength = 0.4, max = 10, className, children, ...rest }) {
+  const reduce = useReducedMotion();
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const sx = useSpring(x, MAGNET);
+  const sy = useSpring(y, MAGNET);
+  const Tag = motion[as];
+  const clamp = (v) => Math.max(-max, Math.min(max, v));
+
+  const move = (e) => {
+    if (reduce || e.pointerType !== "mouse") return;
+    const r = e.currentTarget.getBoundingClientRect();
+    x.set(clamp((e.clientX - (r.left + r.width / 2)) * strength));
+    y.set(clamp((e.clientY - (r.top + r.height / 2)) * strength));
+  };
+  const leave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <Tag className={className} style={{ x: sx, y: sy }} onPointerMove={move} onPointerLeave={leave} {...rest}>
+      {children}
+    </Tag>
   );
 }
 

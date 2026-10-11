@@ -87,15 +87,15 @@ export default function Header() {
       >
         <nav
           aria-label="Primary"
-          className="grid grid-cols-[1fr_auto_1fr] items-start px-gutter pt-[clamp(0.9rem,1.9vw,2.1rem)] text-[clamp(0.95rem,0.6vw+0.45rem,1.2rem)] leading-tight"
+          className="grid grid-cols-[1fr_auto_1fr] items-start p-[clamp(0.625rem,0.9vw,1rem)] text-[clamp(1rem,0.6vw+0.5rem,1.25rem)] leading-tight"
         >
           <a
             ref={box(0)}
             data-tone={tones[0]}
             href="#top"
             onClick={go("top")}
-            className="nav-box -ml-[0.5em] justify-self-start"
-            aria-label="Sangik Ghosh — back to top"
+            className="nav-box justify-self-start"
+            aria-label="Sangik Ghosh, back to top"
           >
             <Roll>©SangikGhosh</Roll>
           </a>
@@ -114,7 +114,7 @@ export default function Header() {
           </ul>
 
           <div className="col-start-3 flex items-start justify-end">
-            <span ref={box(2)} data-tone={tones[2]} className="nav-box -mr-[0.5em]">
+            <span ref={box(2)} data-tone={tones[2]} className="nav-box">
               <a href="#contact" onClick={go("contact")} className="hidden md:inline-flex">
                 <Roll>Get in touch</Roll>
               </a>

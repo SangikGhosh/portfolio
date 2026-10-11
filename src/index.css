@@ -120,8 +120,9 @@ body::-webkit-scrollbar,
   .nav-box {
     display: inline-flex;
     align-items: flex-start;
-    padding: 0.3em 0.5em 0.34em;
-    border-radius: 3px;
+    /* Same breathing room on every box; the boxes themselves sit a hair inside the viewport edge. */
+    padding: 0.38em 0.6em 0.42em;
+    border-radius: 2px;
     background: #fff;
     color: #000;
     transition: background-color 400ms var(--ease-out), color 400ms var(--ease-out);

@@ -43,12 +43,12 @@ export default function Numbers() {
         </p>
       </div>
 
-      <div className="grid border-t border-rule md:grid-cols-3">
+      <div className="grid md:grid-cols-3">
         {stats.map((s, i) => (
           <FadeIn
             key={s.label}
             delay={i * 0.08}
-            className={i > 0 ? "border-t border-rule py-8 md:border-l md:border-t-0 md:pl-6" : "py-8 md:pr-6"}
+            className={i > 0 ? "py-8 md:pl-6" : "py-8 md:pr-6"}
           >
             <a href={s.href} target="_blank" rel="noreferrer" className="group block">
               <CountUp

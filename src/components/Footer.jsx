@@ -9,10 +9,9 @@ import { ArrowRight, ArrowUp, ArrowUpRight, EASE, FadeIn, Label, Roll } from "./
 const WEB3FORMS_KEY = "987eaf20-883f-4372-a319-b9deaedef032";
 
 function Marquee() {
-  const [big, small] = contact.marquee;
-  const item = (k) => (
+  const item = ([big, small], k) => (
     <span key={k} className="flex shrink-0 items-center gap-8 pr-8">
-      <span className="font-display text-d2">{big}</span>
+      <span className="whitespace-nowrap font-display text-d2">{big}</span>
       <span className="max-w-[17rem] text-meta leading-snug">{small}</span>
     </span>
   );
@@ -21,7 +20,7 @@ function Marquee() {
       <div className="marquee-track flex w-max">
         {[0, 1].map((half) => (
           <div key={half} className="flex">
-            {[0, 1, 2, 3].map((k) => item(`${half}-${k}`))}
+            {contact.marquee.map((pair, k) => item(pair, `${half}-${k}`))}
           </div>
         ))}
       </div>
@@ -35,7 +34,10 @@ function Field({ label, as: Tag = "input", ...props }) {
       <span className="text-meta text-dim">{label}</span>
       <Tag
         {...props}
-        className="mt-2 w-full resize-none rounded-none border-b border-rule bg-transparent pb-3 text-lead text-paper outline-none transition-colors duration-400 placeholder:text-[#4a4a4a] focus:border-paper"
+        // The message box grows with its text, so it never scrolls on its own and the page keeps one smooth scroll.
+        className={`mt-2 w-full resize-none rounded-none border-b border-rule bg-transparent pb-3 text-lead text-paper outline-none transition-colors duration-400 placeholder:text-[#4a4a4a] focus:border-paper ${
+          Tag === "textarea" ? "min-h-[4.5em] [field-sizing:content]" : ""
+        }`}
       />
     </label>
   );
@@ -64,7 +66,7 @@ function NoteForm() {
   };
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-8" data-lenis-prevent>
+    <form onSubmit={onSubmit} className="grid gap-8">
       <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
       <div className="grid gap-8 sm:grid-cols-2">
         <Field label="Name" name="name" required autoComplete="name" placeholder="Your name" />
@@ -77,7 +79,7 @@ function NoteForm() {
           <ArrowRight className="arrow h-3.5 w-3.5" />
         </button>
         <p aria-live="polite" className="text-meta text-dim">
-          {status === "sent" && "Thank you — I’ll reply within a day or two."}
+          {status === "sent" && "Thank you. I’ll reply within a day or two."}
           {status === "error" && (
             <>
               Couldn’t send that. Email me at{" "}

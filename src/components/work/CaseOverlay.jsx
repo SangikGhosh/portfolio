@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
-import { projects } from "../../data/content";
+import { caseProjects as projects } from "../../data/content";
 import { ArrowRight, ArrowUpRight, FadeIn, Label, RiseText, Roll } from "../ui/primitives";
 import { COVERS } from "./covers";
 
 /*
- * A case study as its own page. It is mounted while the eyes are closed, so when they
+ * A project as its own page. It is mounted while the eyes are closed, so when they
  * open the visitor is simply somewhere else — no slide-in, no modal chrome.
  */
 export default function CaseOverlay({ id, onClose, onNext }) {
@@ -30,13 +30,13 @@ export default function CaseOverlay({ id, onClose, onNext }) {
       key={p.id}
       role="dialog"
       aria-modal="true"
-      aria-label={`${p.name} — case study`}
+      aria-label={`${p.name} project`}
       data-lenis-prevent
       className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain bg-paper text-ink"
     >
       <div className="sticky top-0 z-10 flex items-start justify-between px-gutter pt-5 text-meta text-paper mix-blend-difference md:pt-7">
         <span>
-          Case {num} <span className="opacity-50">/ 0{projects.length}</span>
+          Project {num} <span className="opacity-50">/ 0{projects.length}</span>
         </span>
         <button ref={closeRef} type="button" onClick={onClose} className="inline-flex items-center gap-2">
           <Roll>Close</Roll>
@@ -79,8 +79,14 @@ export default function CaseOverlay({ id, onClose, onNext }) {
           ))}
         </FadeIn>
 
-        <FadeIn play delay={0.8} y={40} className="relative mt-10 aspect-[16/10] w-full [container-type:inline-size]">
-          <Cover play />
+        {/* Same 10:7 frame as the card, capped so the whole cover fits on screen. */}
+        <FadeIn
+          play
+          delay={0.8}
+          y={40}
+          className="relative isolate mx-auto mt-10 aspect-[10/7] w-full max-w-[calc((100svh-8rem)*10/7)] overflow-hidden rounded-[4px] [container-type:inline-size]"
+        >
+          <Cover play full video={p.video} />
         </FadeIn>
 
         <section className="mt-[clamp(4rem,12svh,8rem)] grid grid-cols-12 gap-x-5 gap-y-8">
@@ -89,6 +95,25 @@ export default function CaseOverlay({ id, onClose, onNext }) {
           </div>
           <p className="indent col-span-12 max-w-[44rem] text-lead md:col-span-6">{p.body}</p>
         </section>
+
+        {p.flow && (
+          <section className="mt-[clamp(4rem,12svh,8rem)] grid grid-cols-12 gap-x-5 gap-y-8">
+            <div className="col-span-12 md:col-span-3">
+              <Label>How it works</Label>
+            </div>
+            <ol className="col-span-12 border-b border-line md:col-span-9">
+              {p.flow.map((s, i) => (
+                <li key={s.step} className="grid grid-cols-9 items-baseline gap-x-5 gap-y-2 border-t border-line py-5 md:py-6">
+                  <span className="col-span-1 text-meta tabular">0{i + 1}</span>
+                  <span className="col-span-8 font-display text-d3 md:col-span-3">{s.step}</span>
+                  <p className="col-span-8 col-start-2 max-w-[34rem] text-meta text-mute md:col-span-5 md:col-start-auto">
+                    {s.text}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
 
         <section className="mt-[clamp(4rem,12svh,8rem)] grid grid-cols-12 gap-x-5 gap-y-10">
           <div className="col-span-12 md:col-span-3">
@@ -113,10 +138,10 @@ export default function CaseOverlay({ id, onClose, onNext }) {
       <button
         type="button"
         onClick={() => onNext(next.id)}
-        data-cursor="Next case"
+        data-cursor="Next project"
         className="group block w-full border-t border-line px-gutter pb-12 pt-6 text-left"
       >
-        <span className="text-meta text-mute">Next case</span>
+        <span className="text-meta text-mute">Next project</span>
         <span className="mt-4 flex items-center justify-between gap-6">
           <span className="font-display text-d1">{next.name}</span>
           <ArrowRight className="h-[clamp(2rem,5vw,4.5rem)] w-[clamp(2rem,5vw,4.5rem)] transition-transform duration-600 ease-out group-hover:translate-x-3" />
