@@ -33,7 +33,7 @@ export function Lids({ open, className, style }) {
             ry="62"
             fill="#000"
             filter={`url(#b${id})`}
-            style={{ scaleY: open, transformBox: "fill-box", transformOrigin: "50% 50%" }}
+            style={{ scaleY: open, transformBox: "view-box" }}
           />
         </mask>
       </defs>
